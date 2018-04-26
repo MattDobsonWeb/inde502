@@ -5,12 +5,15 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
+const mongoose = require("mongoose");
 
 // Input Validation
-const validateRegisterInput = require("../../validation/register");
+const validateRegisterInput = require("../../validation/registerValidation");
+const validateLoginInput = require("../../validation/loginValidation");
 
 // Load User Model
 const User = require("../../models/User");
+const Profile = require("../../models/Profile");
 
 // @route   GET api/users/test
 // @desc    Tests users route
@@ -29,58 +32,75 @@ router.post("/register", (req, res) => {
   }
 
   // Check if there is already a user with the same username
-  User.findOne({ username: req.body.username }).then(user => {
-    if (user) {
-      errors.username = "Username already exists.";
-      return res.status(400).json(errors);
-    } else {
-      // If not, check to see if there is a user with the same email
-      User.findOne({ email: req.body.email }).then(user => {
-        if (user) {
-          errors.email = "Email is already registered with another account.";
-          return res.status(400).json(errors);
-        } else {
-          // Bring in gravatar
-          const avatar = gravatar.url(req.body.email, {
-            s: "200", // Size
-            r: "pg", // Rating
-            d: "mm" // Default
-          });
-
-          // If username and email not in use, create user
-          const newUser = new User({
-            username: req.body.username,
-            email: req.body.email,
-            avatar,
-            password: req.body.password
-          });
-
-          // Encrypt the password using bcrypt
-          bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-              if (err) throw err;
-
-              // Turn the user password into hash
-              newUser.password = hash;
-
-              // Send new user to database through mongoose
-              newUser
-                .save()
-                .then(user => res.json(user))
-                .catch(err => console.log(err));
+  User.findOne({ username: { $regex: req.body.username, $options: "i" } }).then(
+    user => {
+      if (user) {
+        errors.username = "Username already exists.";
+        return res.status(400).json(errors);
+      } else {
+        // If not, check to see if there is a user with the same email
+        User.findOne({ email: req.body.email }).then(user => {
+          if (user) {
+            errors.email = "Email is already registered with another account.";
+            return res.status(400).json(errors);
+          } else {
+            // Bring in gravatar
+            const avatar = gravatar.url(req.body.email, {
+              s: "200", // Size
+              r: "pg", // Rating
+              d: "mm" // Default
             });
-          });
-        }
-      });
+
+            // If username and email not in use, create user
+            const newUser = new User({
+              username: req.body.username,
+              email: req.body.email,
+              avatar,
+              password: req.body.password
+            });
+
+            // Encrypt the password using bcrypt
+            bcrypt.genSalt(10, (err, salt) => {
+              bcrypt.hash(newUser.password, salt, (err, hash) => {
+                if (err) throw err;
+
+                // Turn the user password into hash
+                newUser.password = hash;
+
+                // Send new user to database through mongoose
+                newUser
+                  .save()
+                  .then(user => {
+                    // Create a profile for this user
+                    const newProfile = new Profile({
+                      displayname: req.body.username,
+                      user: user._id
+                    }).save();
+
+                    res.json(user);
+                  })
+                  .catch(err => console.log(err));
+              });
+            });
+          }
+        });
+      }
     }
-  });
+  );
 });
 
 // @route   GET api/users/login
 // @desc    Login User / Returning JWT Token
 // @access  Public
 router.post("/login", (req, res) => {
-  const username = req.body.username;
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  const username = { $regex: req.body.username, $options: "i" };
   const password = req.body.password;
 
   // Find user by username
@@ -98,7 +118,7 @@ router.post("/login", (req, res) => {
         // Create JWT Payload
         const payload = {
           id: user.id,
-          name: user.username,
+          username: user.username,
           avatar: user.avatar
         };
 

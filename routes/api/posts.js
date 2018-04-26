@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const mognosse = require("mongoose");
+const passport = require("passport");
 
 // @route   GET api/posts/test
-// @desc    Tests posts route
+// @desc    Tests post route
 // @access  Public
-router.get("/test", (req, res) => res.json({ msg: "Post Works" }));
+router.get("/test", (req, res) => res.json({ msg: "Posts Works" }));
 
-// Export router so server.js can pick it up
 module.exports = router;
