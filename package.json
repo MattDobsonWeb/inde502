@@ -10,15 +10,20 @@
   "author": "Matt Dobson",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "gravatar": "^1.6.0",
+    "http": "0.0.0",
+    "https": "^1.0.0",
     "jsonwebtoken": "^8.2.1",
     "mongoose": "^5.0.16",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "regex": "^0.1.1",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2",
     "validator": "^9.4.1"
   },
   "devDependencies": {

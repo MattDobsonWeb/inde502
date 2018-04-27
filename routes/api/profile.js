@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
+const rp = require('request-promise');
 
 // Load Validation
 const validateProfileInput = require("../../validation/profileValidation");
@@ -115,6 +116,22 @@ router.get("/handle/:username", (req, res) => {
     })
     .catch(err => res.status(404).json(err));
 });
+
+// @route   GET api/profile/movie/:movie_id
+// @desc    Get movie data
+// @access  Public
+router.get("/movie/:movie_id", (req, res) => {
+  const errors = {};
+  
+  // Move this to front end - use this area to get posts by movieID
+  rp.get(`http://www.omdbapi.com/?i=${req.params.movie_id}&apikey=a71dd7da`)
+  .then(data => {
+    const parsedData = JSON.parse(data);
+    const JSONdata = JSON.stringify(parsedData);
+    res.json(parsedData);
+  });
+});
+
 
 // @route   GET api/profile/user/:user_id
 // @desc    Get profile by user ID
