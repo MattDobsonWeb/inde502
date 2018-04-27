@@ -11,7 +11,10 @@ const PostSchema = new Schema({
     type: String,
     required: true
   },
-  watching: {
+  movieTitle: {
+    type: String
+  },
+  movieId: {
     type: String
   },
   username: {

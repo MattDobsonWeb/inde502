@@ -10,6 +10,9 @@ const ProfileSchema = new Schema({
   displayname: {
     type: String
   },
+  username: {
+    type: String
+  },
   bio: {
     type: String,
     max: 150

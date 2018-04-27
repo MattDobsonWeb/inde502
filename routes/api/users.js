@@ -74,6 +74,7 @@ router.post("/register", (req, res) => {
                     // Create a profile for this user
                     const newProfile = new Profile({
                       displayname: req.body.username,
+                      username: req.body.username,
                       user: user._id
                     }).save();
 
