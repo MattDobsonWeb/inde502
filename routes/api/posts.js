@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const rp = require("request-promise");
 const keys = require("../../config/keys");
+const isEmpty = require("../../validation/is-empty");
 
 // Load Posts Model
 const Post = require("../../models/Post");
@@ -124,6 +125,21 @@ router.get("/", (req, res) => {
     .sort({ date: -1 })
     .then(posts => res.json(posts))
     .catch(err => res.status(404).json({ nopostfound: "No posts found" }));
+});
+
+// @route   GET api/posts/:username
+// @desc    Get post by username
+// @access  Public
+router.get("/:username", (req, res) => {
+  Profile.findOne({
+    username: { $regex: req.params.username, $options: "i" }
+  }).then(profile => {
+    Post.find({ user: profile.user }).then(posts => {
+      if (isEmpty(posts))
+        res.status(404).json({ nopostsfound: "No posts found from this user" });
+      else res.json(posts);
+    });
+  });
 });
 
 // @route   GET api/posts/:id
