@@ -93,6 +93,10 @@ body {
   background-color: #f96854;
 }
 
+.post-text {
+  white-space: pre-line;
+}
+
 .patreon {
   color: #052d49;
 }
