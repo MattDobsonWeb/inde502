@@ -8,3 +8,4 @@ export const ADD_POST = "ADD_POST";
 export const DELETE_POST = "DELETE_POST";
 export const GET_MOVIE_POSTS = "GET_MOVIE_POSTS";
 export const GET_MOVIE_DATA = "GET_MOVIE_DATA";
+export const MOVIE_DATA_LOADING = "MOVIE_DATA_LOADING";

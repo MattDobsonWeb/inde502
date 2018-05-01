@@ -47,7 +47,7 @@ class App extends Component {
             <Route exact path="/" component={Posts} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/movie/:movie_id" component={Movie} />
+            <Route exact path="/:media/:movie_id" component={Movie} />
           </div>
         </Router>
       </Provider>

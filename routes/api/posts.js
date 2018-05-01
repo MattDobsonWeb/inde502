@@ -41,25 +41,39 @@ router.post(
         // Pull film info from database!
         rp
           .get(
-            `http://www.omdbapi.com/?i=${req.body.movie}&apikey=${
-              keys.OMDBkey
-            }`,
+            `https://api.themoviedb.org/3/find/${req.body.movie}?api_key=${
+              keys.TMDBkey
+            }&external_source=imdb_id`,
             {
               json: true
             }
           )
           .then(data => {
-            if (data.Response === "False") {
+            if (isEmpty(data.movie_results) && isEmpty(data.tv_results)) {
               res.status(404).json({
                 movie:
                   "There is no movie found with that ID, make sure you're inputting the ID as seen in the IMDB URL"
               });
+            } else if (isEmpty(data.movie_results)) {
+              const newPost = new Post({
+                text: req.body.text,
+                username: req.body.username,
+                movieTitle: data.tv_results[0].name,
+                movieId: data.tv_results[0].id,
+                movieMedia: "tv",
+                avatar: req.body.avatar,
+                user: req.user.id
+              });
+
+              // Save the post
+              newPost.save().then(post => res.json(post));
             } else {
               const newPost = new Post({
                 text: req.body.text,
                 username: req.body.username,
-                movieTitle: data.Title,
-                movieId: data.imdbID,
+                movieTitle: data.movie_results[0].title,
+                movieId: data.movie_results[0].id,
+                movieMedia: "movie",
                 avatar: req.body.avatar,
                 user: req.user.id
               });
@@ -69,11 +83,12 @@ router.post(
             }
           });
       } else {
-        // Pull data from OMDB api
+        // Pull data from TMDB api
         rp
           .get(
-            `http://www.omdbapi.com/?t=${req.body.movie}&apikey=${
-              keys.OMDBkey
+            `https://api.themoviedb.org/3/search/multi?api_key=${
+              keys.TMDBkey
+            }&language=en-US&query=${req.body.movie}&page=1
             }`,
             {
               json: true
@@ -81,18 +96,22 @@ router.post(
           )
           .then(data => {
             // If no data is returned run error.
-            if (data.Response === "False") {
+            if (isEmpty(data.results)) {
               res.status(404).json({
                 movie:
-                  "There is no movie found with that title, make sure you're inputting the title as seen on IMDB"
+                  "There is no movie found with that title, make sure you're inputting the title as seen on The Movie Database"
               });
             } else {
-              // If data is returned post
+              const title = data.results[0].title
+                ? data.results[0].title
+                : data.results[0].name;
+
               const newPost = new Post({
                 text: req.body.text,
                 username: req.body.username,
-                movieTitle: data.Title,
-                movieId: data.imdbID,
+                movieTitle: title,
+                movieId: data.results[0].id,
+                movieMedia: data.results[0].media_type,
                 avatar: req.body.avatar,
                 user: req.user.id
               });

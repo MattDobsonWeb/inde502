@@ -17,6 +17,9 @@ const PostSchema = new Schema({
   movieId: {
     type: String
   },
+  movieMedia: {
+    type: String
+  },
   username: {
     type: String
   },

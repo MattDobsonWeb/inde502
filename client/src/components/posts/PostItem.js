@@ -33,7 +33,10 @@ class PostItem extends Component {
 
     const watchingMovie = (
       <span>
-        is watching <Link to={`/movie/${post.movieId}`}>{post.movieTitle}</Link>
+        is watching{" "}
+        <Link to={`/${post.movieMedia}/${post.movieId}`}>
+          {post.movieTitle}
+        </Link>
       </span>
     );
 

@@ -1,19 +1,105 @@
 html,
 body {
   overflow-x: hidden; /* Prevent scroll on narrow devices */
-  font-family: "Open Sans", sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
-body {
-  /*  padding-top: 56px;*/
+/* Colours */
+.bg-navy {
+  background-color: #0d2a35;
 }
 
-.navbar-brand {
+.bg-orange {
+  background-color: #ff7f00;
+}
+
+.text-orange {
+  color: #ff7f00;
+}
+
+.text-orange:hover {
+  color: #ff7f00;
+}
+
+.orange-link {
+  color: #ff7f00;
+}
+
+.orange-link:hover {
+  color: #ff7f00;
+}
+
+.text-navy {
+  color: #0d2a35;
+}
+
+.border-orange {
+  border: 3px solid #ff7f00;
+}
+
+.border-bottom-orange {
+  border-bottom: 3px solid #ff7f00;
+}
+
+.border-bottom-navy {
+  border-bottom: 3px solid #0d2a35;
+}
+
+/* Button Styling */
+.btn-outline-orange {
+  border: 1px solid #ff7f00;
+  color: #ff7f00;
+  text-transform: uppercase;
+  background-color: transparent;
+}
+
+.btn-outline-orange:hover,
+.btn-outline-orange:focus,
+.btn-outline-orange:active,
+.btn-outline-orange.active,
+.open > .dropdown-toggle.btn-outline-orange {
+  background: #ff7f00;
+  color: #0d2a35;
+}
+
+.btn-outline-orange:active,
+.btn-outline-orange.active {
+  background: #ff7f00;
+  box-shadow: none;
+}
+
+/* Navbar */
+.logo {
+  color: red;
+  font-size: 30px;
+}
+
+a.navbar-brand {
+  font-weight: 700;
+  color: #ff7f00;
+  font-size: 30px;
+}
+
+.nav-link {
+  text-transform: uppercase;
   font-weight: 600;
+  font-size: 20px;
 }
 
-.movie-info {
-  opacity: 0.9;
+.avatar-nav {
+  width: 40px;
+  margin-right: 5px;
+  border: 3px solid #ff7f00;
+}
+
+.dropdown-menu {
+  border: 3px solid #ff7f00;
+}
+
+.dropdown-item {
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 @media (max-width: 991.98px) {
@@ -93,16 +179,8 @@ body {
   background-color: #f96854;
 }
 
-.post-text {
-  white-space: pre-line;
-}
-
 .patreon {
   color: #052d49;
-}
-
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
@@ -121,11 +199,6 @@ body {
 }
 .lh-150 {
   line-height: 1.5;
-}
-
-/* Ratings*/
-.ratings {
-  background: red;
 }
 
 /* Login */

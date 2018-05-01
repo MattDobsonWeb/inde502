@@ -10,7 +10,10 @@ import { getMovieData, getMoviePosts } from "../../actions/movieActions";
 
 class Movie extends Component {
   componentDidMount() {
-    this.props.getMovieData(this.props.match.params.movie_id);
+    this.props.getMovieData(
+      this.props.match.params.media,
+      this.props.match.params.movie_id
+    );
     this.props.getMoviePosts(this.props.match.params.movie_id);
   }
   render() {
@@ -47,4 +50,7 @@ const mapStateToProps = state => ({
   movie: state.movie
 });
 
-export default connect(mapStateToProps, { getMovieData, getMoviePosts })(Movie);
+export default connect(mapStateToProps, {
+  getMovieData,
+  getMoviePosts
+})(Movie);

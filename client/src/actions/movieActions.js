@@ -3,16 +3,17 @@ import axios from "axios";
 import {
   GET_MOVIE_DATA,
   GET_MOVIE_POSTS,
-  POST_LOADING,
-  GET_ERRORS
+  MOVIE_DATA_LOADING,
+  GET_ERRORS,
+  POST_LOADING
 } from "./types";
 
 // Get Movie Data
-export const getMovieData = movie_id => dispatch => {
-  dispatch(setPostLoading());
+export const getMovieData = (media, movie_id) => dispatch => {
+  dispatch(setMovieDataLoading());
 
   axios
-    .get(`/api/movies/info/${movie_id}`)
+    .get(`/api/movies/${media}/${movie_id}`)
     .then(res =>
       dispatch({
         type: GET_MOVIE_DATA,
@@ -30,7 +31,6 @@ export const getMovieData = movie_id => dispatch => {
 // Get Movie Posts
 export const getMoviePosts = movie_id => dispatch => {
   dispatch(setPostLoading());
-  console.log(movie_id);
   axios
     .get(`/api/movies/${movie_id}`)
     .then(res =>
@@ -44,6 +44,13 @@ export const getMoviePosts = movie_id => dispatch => {
 
 //Set Loading State
 export const setPostLoading = () => {
+  return {
+    type: MOVIE_DATA_LOADING
+  };
+};
+
+//Set Loading State
+export const setMovieDataLoading = () => {
   return {
     type: POST_LOADING
   };

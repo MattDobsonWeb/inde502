@@ -1,7 +1,8 @@
 import {
   GET_MOVIE_DATA,
   GET_MOVIE_POSTS,
-  POST_LOADING
+  POST_LOADING,
+  MOVIE_DATA_LOADING
 } from "../actions/types";
 
 const initialState = {
@@ -12,6 +13,11 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case MOVIE_DATA_LOADING:
+      return {
+        ...state,
+        loading: true
+      };
     case POST_LOADING:
       return {
         ...state,
@@ -20,8 +26,7 @@ export default function(state = initialState, action) {
     case GET_MOVIE_POSTS:
       return {
         ...state,
-        moviePosts: action.payload,
-        loading: false
+        moviePosts: action.payload
       };
     case GET_MOVIE_DATA:
       return {

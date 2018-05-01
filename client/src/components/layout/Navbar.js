@@ -18,28 +18,34 @@ class Navbar extends Component {
       <ul className="navbar-nav ml-auto">
         <li className="nav-item dropdown">
           <a
-            className="nav-link dropdown-toggle"
+            className="nav-link dropdown-toggle text-white"
+            href="http://example.com"
             id="dropdown07"
-            href=""
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
           >
             <img
-              className="rounded-circle mr-2"
-              style={{ width: "25px", marginRight: "5px" }}
+              className="rounded-circle avatar-nav mr-2"
               src={user.avatar}
               alt=""
               title="You must have a Gravatar connected to your email to display an image"
             />dobbo
           </a>
-          <div className="dropdown-menu" aria-labelledby="dropdown07">
+          <div
+            className="dropdown-menu dropdown-menu-right text-right bg-navy text-white"
+            aria-labelledby="dropdown07"
+          >
             <a
               className="dropdown-item"
               onClick={this.onLogoutClick.bind(this)}
               href=""
             >
               Logout
+            </a>
+            <div className="dropdown-divider" />
+            <a className="dropdown-item" href="">
+              Profile Settings
             </a>
           </div>
         </li>
@@ -50,23 +56,23 @@ class Navbar extends Component {
     const guestLinks = (
       <ul className="navbar-nav ml-auto self">
         <li className="nav-item align-self-center">
-          <Link className="nav-link" to="/register">
+          <Link className="nav-link text-white" to="/register">
             Register
           </Link>
         </li>
-        <form className="form-inline my-2 my-lg-0">
-          <Link className="nav-link" to="/login">
-            <button className="btn btn-outline-primary">Login</button>
+        <li className="nav-item align-self-center">
+          <Link className="nav-link text-orange" to="/login">
+            Login
           </Link>
-        </form>
+        </li>
       </ul>
     );
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-white box-shadow border-bottom border-dark-gray">
+      <nav className="navbar navbar-expand-lg bg-navy box-shadow border-bottom-orange">
         <div className="container">
-          <Link className="navbar-brand text-muted" to="/">
-            ReelFans
+          <Link className="navbar-brand lh-100" to="/">
+            REEL<br />NATTER.
           </Link>
           <button
             className="navbar-toggler"
@@ -83,7 +89,7 @@ class Navbar extends Component {
           <div className="collapse navbar-collapse" id="navbarsExample07">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <Link className="nav-link" to="/">
+                <Link className="nav-link text-white" to="/">
                   Post Feed
                 </Link>
               </li>
