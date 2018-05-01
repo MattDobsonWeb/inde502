@@ -8,10 +8,14 @@
 # Install dependencies for server
 npm install
 
-# Run the express server
+# Install dependencies for client
+cd client
+npm install
+
+# Run the server and react front end (remember to cd out of client)
 npm run dev
 
-# Server runs on http://localhost:5000
+# Server runs on http://localhost:5000, client runs on http://localhost:3000
 ```
 
 ## App Info
