@@ -4,6 +4,10 @@ body {
   font-family: "Source Sans Pro", sans-serif;
 }
 
+body {
+  /*  padding-top: 56px;*/
+}
+
 /* Colours */
 .bg-navy {
   background-color: #0d2a35;
@@ -14,10 +18,6 @@ body {
 }
 
 .text-orange {
-  color: #ff7f00;
-}
-
-.text-orange:hover {
   color: #ff7f00;
 }
 
@@ -68,6 +68,22 @@ body {
   box-shadow: none;
 }
 
+.post-form {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.25);
+  border: 1px solid #ff7f00;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.post-form:focus {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.25);
+  border-color: #ff7f00;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(255, 127, 0, 0.25);
+}
+
 /* Navbar */
 .logo {
   color: red;
@@ -101,6 +117,16 @@ a.navbar-brand {
   font-weight: 600;
   text-transform: uppercase;
 }
+
+.navbar-brand.brand {
+  color: #ff7f00;
+}
+
+.navbar-brand.brand:hover {
+  color: #ff5f00;
+}
+
+/* Post */
 
 @media (max-width: 991.98px) {
   .offcanvas-collapse {
@@ -201,6 +227,10 @@ a.navbar-brand {
   line-height: 1.5;
 }
 
+/* Profile */
+.avatar-profile {
+  width: 150px;
+}
 /* Login */
 .login {
   display: -ms-flexbox;
@@ -245,4 +275,14 @@ a.navbar-brand {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.jumbotron {
+  background-image: linear-gradient(
+      rgba(13, 42, 53, 0.7),
+      rgba(13, 42, 53, 0.7)
+    ),
+    url("https://image.tmdb.org/t/p/original/sidkiCLsv34nczGD84LOvb6rlaH.jpg");
+  background-size: cover;
+  background-position: top;
 }

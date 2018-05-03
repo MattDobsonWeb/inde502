@@ -5,6 +5,7 @@ import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import { addPost } from "../../actions/postActions";
 import InputGroup from "../common/InputGroup";
 import isEmpty from "../../validation/is-empty";
+import classnames from "classnames";
 
 class PostForm extends Component {
   constructor(props) {
@@ -52,15 +53,20 @@ class PostForm extends Component {
     const { user } = this.props.auth;
 
     return (
-      <div className="p-3 my-3 bg-white rounded box-shadow">
+      <div className="p-3 my-3 text-white rounded box-shadow bg-navy border-bottom-orange">
         <div className="media">
-          <img src={user.avatar} alt="" className="avatar mr-3 rounded" />
+          <img
+            src={user.avatar}
+            alt=""
+            className="avatar mr-3 rounded-circle border-orange"
+          />
           <div className="media-body">
             <form onSubmit={this.onSubmit}>
-              <div className="form-group mb-2">
+              <div className="form-group mb-2 text-white">
                 <InputGroup
                   placeholder="Watching... (film title or ID from IMDB)"
                   name="movie"
+                  customClass="post-form"
                   value={this.state.movie}
                   onChange={this.onChange}
                   error={errors.movie}
@@ -70,13 +76,14 @@ class PostForm extends Component {
                 <TextAreaFieldGroup
                   placeholder="Create a post..."
                   name="text"
+                  customClass="post-form"
                   value={this.state.text}
                   onChange={this.onChange}
                   error={errors.text}
                 />
               </div>
               <div className="text-right">
-                <button type="submit" className="btn btn-outline-primary">
+                <button type="submit" className="btn btn-outline-orange">
                   Post
                 </button>
               </div>

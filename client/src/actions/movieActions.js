@@ -28,20 +28,6 @@ export const getMovieData = (media, movie_id) => dispatch => {
     );
 };
 
-// Get Movie Posts
-export const getMoviePosts = movie_id => dispatch => {
-  dispatch(setPostLoading());
-  axios
-    .get(`/api/movies/${movie_id}`)
-    .then(res =>
-      dispatch({
-        type: GET_MOVIE_POSTS,
-        payload: res.data
-      })
-    )
-    .catch(err => console.log(err));
-};
-
 //Set Loading State
 export const setPostLoading = () => {
   return {

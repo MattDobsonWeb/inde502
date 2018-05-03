@@ -3,7 +3,9 @@ import {
   GET_POSTS,
   POST_LOADING,
   DELETE_POST,
-  GET_POST
+  GET_POST,
+  UPDATE_LIKES,
+  GET_MOVIE_POSTS
 } from "../actions/types";
 
 const initialState = {
@@ -26,11 +28,27 @@ export default function(state = initialState, action) {
         posts: action.payload,
         loading: false
       };
+    case GET_MOVIE_POSTS:
+      return {
+        ...state,
+        posts: action.payload,
+        loading: false
+      };
     case GET_POST:
       return {
         ...state,
         post: action.payload,
         loading: false
+      };
+    case UPDATE_LIKES:
+      return {
+        ...state,
+        posts: state.posts.map(posts => {
+          if (posts._id === action.payload._id) {
+            return { ...posts, ...action.payload };
+          }
+          return posts;
+        })
       };
     case ADD_POST:
       return {

@@ -7,7 +7,9 @@ import {
   GET_POSTS,
   GET_POST,
   POST_LOADING,
-  DELETE_POST
+  DELETE_POST,
+  UPDATE_LIKES,
+  GET_MOVIE_POSTS
 } from "./types";
 
 // Add Post
@@ -49,6 +51,20 @@ export const getPosts = () => dispatch => {
     );
 };
 
+// Get Movie Posts
+export const getMoviePosts = movie_id => dispatch => {
+  dispatch(setPostLoading());
+  axios
+    .get(`/api/movies/${movie_id}`)
+    .then(res =>
+      dispatch({
+        type: GET_MOVIE_POSTS,
+        payload: res.data
+      })
+    )
+    .catch(err => console.log(err));
+};
+
 // Get Single Post
 export const getPost = id => dispatch => {
   dispatch(setPostLoading());
@@ -73,7 +89,7 @@ export const getPost = id => dispatch => {
 export const deletePost = id => dispatch => {
   if (window.confirm("Are you sure? This can NOT be undone!")) {
     axios
-      .delete(`api/posts/${id}`)
+      .delete(`/api/posts/${id}`)
       .then(res =>
         dispatch({
           type: DELETE_POST,
@@ -92,8 +108,13 @@ export const deletePost = id => dispatch => {
 // Add Like
 export const addLike = id => dispatch => {
   axios
-    .post(`api/posts/like/${id}`)
-    .then(res => dispatch(getPosts()))
+    .post(`/api/posts/like/${id}`)
+    .then(res =>
+      dispatch({
+        type: UPDATE_LIKES,
+        payload: res.data
+      })
+    )
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -105,8 +126,13 @@ export const addLike = id => dispatch => {
 // Remove Like
 export const removeLike = id => dispatch => {
   axios
-    .post(`api/posts/unlike/${id}`)
-    .then(res => dispatch(getPosts()))
+    .post(`/api/posts/unlike/${id}`)
+    .then(res =>
+      dispatch({
+        type: UPDATE_LIKES,
+        payload: res.data
+      })
+    )
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

@@ -41,11 +41,11 @@ class Navbar extends Component {
               onClick={this.onLogoutClick.bind(this)}
               href=""
             >
-              Logout
+              <i className="fas fa-sign-out-alt" /> Logout
             </a>
             <div className="dropdown-divider" />
             <a className="dropdown-item" href="">
-              Profile Settings
+              <i className="fas fa-user-circle" /> Profile Settings
             </a>
           </div>
         </li>

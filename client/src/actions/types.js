@@ -9,3 +9,4 @@ export const DELETE_POST = "DELETE_POST";
 export const GET_MOVIE_POSTS = "GET_MOVIE_POSTS";
 export const GET_MOVIE_DATA = "GET_MOVIE_DATA";
 export const MOVIE_DATA_LOADING = "MOVIE_DATA_LOADING";
+export const UPDATE_LIKES = "UPDATE_LIKES";
