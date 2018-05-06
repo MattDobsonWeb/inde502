@@ -79,8 +79,8 @@ export const getPost = id => dispatch => {
     )
     .catch(err =>
       dispatch({
-        type: GET_POST,
-        payload: null
+        type: GET_ERRORS,
+        payload: err.response.data
       })
     );
 };

@@ -5,6 +5,7 @@ import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { deletePost, addLike, removeLike } from "../../actions/postActions";
 import Moment from "react-moment";
+import isEmpty from "../../validation/is-empty";
 
 class PostItem extends Component {
   onDeleteClick(id) {
@@ -38,7 +39,7 @@ class PostItem extends Component {
         is watching{" "}
         <Link
           className="orange-link"
-          to={`/${post.movieMedia}/${post.movieId}`}
+          to={`/media/${post.movieMedia}/${post.movieId}`}
         >
           {post.movieTitle}
         </Link>
@@ -55,10 +56,11 @@ class PostItem extends Component {
           />
           <div className="media-body d-block">
             <p className="pb-3 mb-0 lh-125 border-gray">
-              <strong className="mb-0 mr-3">
-                {post.username}
-                <span className="float-right">6d.</span>
-              </strong>
+              <strong className="mb-0 mr-3">{post.username}</strong>
+              <span className="float-right">
+                <Moment fromNow>{post.date}</Moment>
+              </span>
+
               <span className="d-block mb-3">
                 <a className="orange-link" href="">
                   @{post.username}
@@ -69,35 +71,47 @@ class PostItem extends Component {
             </p>
 
             <span>
-              {this.findUserLike(post.likes) ? (
-                <button
-                  onClick={this.onLikeClick.bind(this, post._id)}
-                  type="button"
-                  className="btn btn-outline-orange mr-1"
-                >
-                  <i
-                    className={classnames("fas fa-thumbs-up", {
-                      "text-info": this.findUserLike(post.likes)
-                    })}
-                  />
-                  <span className="badge">{post.likes.length}</span>
-                </button>
-              ) : (
-                <button
-                  onClick={this.onLikeClick.bind(this, post._id)}
-                  type="button"
-                  className="btn btn-outline-orange mr-1"
-                >
-                  <i className={classnames("fas fa-thumbs-up")} />
-                  <span className="badge">{post.likes.length}</span>
-                </button>
-              )}
-              <Link
-                to={`/post/${post._id}`}
-                className="btn btn-outline-orange mr-1"
-              >
-                Comments ({post.comments.length})
-              </Link>
+              {showActions ? (
+                this.findUserLike(post.likes) ? (
+                  <span>
+                    <button
+                      onClick={this.onLikeClick.bind(this, post._id)}
+                      type="button"
+                      className="btn btn-outline-orange mr-1"
+                    >
+                      <i
+                        className={classnames("fas fa-thumbs-up", {
+                          "text-info": this.findUserLike(post.likes)
+                        })}
+                      />
+                      <span className="badge">{post.likes.length}</span>
+                    </button>
+                    <Link
+                      to={`/post/${post._id}`}
+                      className="btn btn-outline-orange mr-1"
+                    >
+                      Comments ({post.comments.length})
+                    </Link>
+                  </span>
+                ) : (
+                  <span>
+                    <button
+                      onClick={this.onLikeClick.bind(this, post._id)}
+                      type="button"
+                      className="btn btn-outline-orange mr-1"
+                    >
+                      <i className={classnames("fas fa-thumbs-up")} />
+                      <span className="badge">{post.likes.length}</span>
+                    </button>
+                    <Link
+                      to={`/post/${post._id}`}
+                      className="btn btn-outline-orange mr-1"
+                    >
+                      Comments ({post.comments.length})
+                    </Link>
+                  </span>
+                )
+              ) : null}
               {post.user === auth.user.id ? (
                 <button
                   onClick={this.onDeleteClick.bind(this, post._id)}
@@ -109,44 +123,20 @@ class PostItem extends Component {
               ) : null}
             </span>
 
-            {/* {showActions ? (
-              <span>
-                <button
-                  onClick={this.onLikeClick.bind(this, post._id)}
-                  type="button"
-                  className="btn btn-outline-orange mr-1"
-                >
-                  <i
-                    className={classnames("fas fa-thumbs-up", {
-                      "text-info": this.findUserLike(post.likes)
-                    })}
-                  />
-                  <span className="badge">{post.likes.length}</span>
-                </button>
-                <button
-                  onClick={this.onUnlikeClick.bind(this, post._id)}
-                  type="button"
-                  className="btn btn-outline-orange mr-1"
-                >
-                  <i className="text-secondary fas fa-thumbs-down" />
-                </button>
-                <Link
-                  to={`/post/${post._id}`}
-                  className="btn btn-outline-orange mr-1"
-                >
-                  Comments ({post.comments.length})
-                </Link>
-                {post.user === auth.user.id ? (
-                  <button
-                    onClick={this.onDeleteClick.bind(this, post._id)}
-                    type="button"
-                    className="btn btn-outline-danger mr-1"
-                  >
-                    <i className="fas fa-times" />
-                  </button>
-                ) : null}
-              </span>
-            ) : null} */}
+            {/* Post Comments */}
+            {/* <div className="mt-3">
+              {!isEmpty(post.comments)
+                ? post.comments.map(comment => (
+                    <p>
+                      <img
+                        className="avatar rounded-circle border-orange"
+                        src={comment.avatar}
+                      />{" "}
+                      {comment.text}
+                    </p>
+                  ))
+                : null}
+            </div> */}
           </div>
         </div>
       </div>

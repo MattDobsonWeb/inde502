@@ -149,16 +149,22 @@ router.get("/", (req, res) => {
 // @route   GET api/posts/:username
 // @desc    Get post by username
 // @access  Public
-router.get("/:username", (req, res) => {
+router.get("user/:username", (req, res) => {
   Profile.findOne({
     username: { $regex: req.params.username, $options: "i" }
-  }).then(profile => {
-    Post.find({ user: profile.user }).then(posts => {
-      if (isEmpty(posts))
-        res.status(404).json({ nopostsfound: "No posts found from this user" });
-      else res.json(posts);
-    });
-  });
+  })
+    .then(profile => {
+      Post.find({ user: profile.user })
+        .sort({ date: -1 })
+        .then(posts => {
+          if (isEmpty(posts))
+            res
+              .status(404)
+              .json({ nopostsfound: "No posts found from this user" });
+          else res.json(posts);
+        });
+    })
+    .catch(err => res.status(404).json({ nouserfound: "No user found" }));
 });
 
 // @route   GET api/posts/:id
@@ -280,8 +286,8 @@ router.post(
       .then(post => {
         const newComment = {
           text: req.body.text,
-          username: req.body.username,
-          avatar: req.body.avatar,
+          username: req.user.username,
+          avatar: req.user.avatar,
           user: req.user.id
         };
 

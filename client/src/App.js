@@ -15,6 +15,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Posts from "./components/posts/Posts";
 import Movie from "./components/movie/Movie";
+import Post from "./components/post/Post";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -47,7 +48,8 @@ class App extends Component {
             <Route exact path="/" component={Posts} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/:media/:movie_id" component={Movie} />
+            <Route exact path="/media/:media/:movie_id" component={Movie} />
+            <Route exact path="/post/:id" component={Post} />
           </div>
         </Router>
       </Provider>
