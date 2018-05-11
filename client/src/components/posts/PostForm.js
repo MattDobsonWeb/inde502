@@ -5,7 +5,6 @@ import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import { addPost } from "../../actions/postActions";
 import InputGroup from "../common/InputGroup";
 import isEmpty from "../../validation/is-empty";
-import classnames from "classnames";
 
 class PostForm extends Component {
   constructor(props) {

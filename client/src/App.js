@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
@@ -10,12 +10,12 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import Navbar from "./components/layout/Navbar";
-import Landing from "./components/layout/Landing";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Posts from "./components/posts/Posts";
 import Movie from "./components/movie/Movie";
 import Post from "./components/post/Post";
+import Profile from "./components/profile/Profile";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -50,6 +50,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/media/:media/:movie_id" component={Movie} />
             <Route exact path="/post/:id" component={Post} />
+            <Route exact path="/profile/:username" component={Profile} />
           </div>
         </Router>
       </Provider>

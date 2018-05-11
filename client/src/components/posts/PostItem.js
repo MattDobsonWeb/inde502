@@ -5,7 +5,6 @@ import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { deletePost, addLike, removeLike } from "../../actions/postActions";
 import Moment from "react-moment";
-import isEmpty from "../../validation/is-empty";
 
 class PostItem extends Component {
   onDeleteClick(id) {
@@ -62,9 +61,9 @@ class PostItem extends Component {
               </span>
 
               <span className="d-block mb-3">
-                <a className="orange-link" href="">
+                <Link className="orange-link" to={`/profile/${post.username}`}>
                   @{post.username}
-                </a>{" "}
+                </Link>{" "}
                 {post.movieTitle ? watchingMovie : null}
               </span>
               {post.text}

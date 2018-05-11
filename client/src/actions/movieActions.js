@@ -2,7 +2,6 @@ import axios from "axios";
 
 import {
   GET_MOVIE_DATA,
-  GET_MOVIE_POSTS,
   MOVIE_DATA_LOADING,
   GET_ERRORS,
   POST_LOADING

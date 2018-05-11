@@ -1,30 +1,21 @@
-import {
-  GET_MOVIE_DATA,
-  POST_LOADING,
-  MOVIE_DATA_LOADING
-} from "../actions/types";
+import { GET_PROFILE, PROFILE_LOADING } from "../actions/types";
 
 const initialState = {
-  movieData: {},
+  profile: null,
   loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case MOVIE_DATA_LOADING:
+    case PROFILE_LOADING:
       return {
         ...state,
         loading: true
       };
-    case POST_LOADING:
+    case GET_PROFILE:
       return {
         ...state,
-        loading: true
-      };
-    case GET_MOVIE_DATA:
-      return {
-        ...state,
-        movieData: action.payload,
+        profile: action.payload,
         loading: false
       };
     default:

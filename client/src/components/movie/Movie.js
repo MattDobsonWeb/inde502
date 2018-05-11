@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import MovieHeader from "./MovieHeader";
 import PostFeed from "../posts/PostFeed";
-import PostForm from "../posts/PostForm";
 import { getMovieData } from "../../actions/movieActions";
 import { getMoviePosts } from "../../actions/postActions";
 
