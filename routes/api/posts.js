@@ -12,6 +12,9 @@ const Post = require("../../models/Post");
 // Load Profile Model
 const Profile = require("../../models/Profile");
 
+// Load Notification Model
+const Notification = require("../../models/Notification");
+
 // Load Posts Valdiation
 const validatePostInput = require("../../validation/postValidation");
 
@@ -146,12 +149,12 @@ router.get("/", (req, res) => {
     .catch(err => res.status(404).json({ nopostfound: "No posts found" }));
 });
 
-// @route   GET api/posts/:username
+// @route   GET api/posts/user/:username
 // @desc    Get post by username
 // @access  Public
-router.get("user/:username", (req, res) => {
+router.get("/user/:username", (req, res) => {
   Profile.findOne({
-    username: { $regex: req.params.username, $options: "i" }
+    username: new RegExp("^" + req.params.username + "$", "i")
   })
     .then(profile => {
       Post.find({ user: profile.user })
@@ -222,8 +225,27 @@ router.post(
               .json({ alreadyliked: "User already liked this post" });
           }
 
+          const newNotification = {
+            toId: post.user,
+            toUsername: post.username,
+            fromId: req.user.id,
+            fromUsername: req.user.username,
+            fromAvatar: req.user.avatar,
+            user: req.user.id,
+            reference: post.id,
+            type: "like",
+            read: false
+          };
+
           // Add user ID to likes array
           post.likes.unshift({ user: req.user.id });
+
+          // Check to see if its the users own post, if it is, don't send notification
+          if (newNotification.toUsername !== newNotification.fromUsername) {
+            new Notification(newNotification)
+              .save()
+              .then(console.log("Like notification Saved"));
+          }
 
           post.save().then(post => res.json(post));
         })
@@ -290,6 +312,52 @@ router.post(
           avatar: req.user.avatar,
           user: req.user.id
         };
+
+        const newNotification = {
+          toId: post.user,
+          toUsername: post.username,
+          fromId: req.user.id,
+          fromUsername: req.user.username,
+          fromAvatar: req.user.avatar,
+          user: req.user.id,
+          reference: post.id,
+          type: "comment",
+          read: false
+        };
+
+        // Add users name to array so that it doesn't receive notification
+        let uniqueUser = [];
+        uniqueUser.push(req.user.username, post.username);
+
+        // Send notifications to others that have commented on the post!
+        post.comments.map(comment => {
+          if (!uniqueUser.includes(comment.username)) {
+            uniqueUser.push(comment.username);
+
+            const newReplyNotifcation = new Notification({
+              toId: comment.user,
+              toUsername: comment.username,
+              fromId: req.user.id,
+              fromUsername: req.user.username,
+              fromAvatar: req.user.avatar,
+              user: req.user.id,
+              reference: post.id,
+              type: "commentReply",
+              read: false
+            });
+
+            newReplyNotifcation
+              .save()
+              .then(console.log("Reply notification Saved"));
+          }
+        });
+
+        // Check to see if its the users own post, if it is, don't send notification
+        if (newNotification.toUsername !== newNotification.fromUsername) {
+          new Notification(newNotification)
+            .save()
+            .then(console.log("Comment notification Saved"));
+        }
 
         // Add to comments array
         post.comments.unshift(newComment);

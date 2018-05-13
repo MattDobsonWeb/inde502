@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_PROFILE, PROFILE_LOADING } from "./types";
+import { GET_PROFILE, PROFILE_LOADING, GET_ERRORS } from "./types";
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
@@ -37,6 +37,19 @@ export const getProfileByUsername = username => dispatch => {
       dispatch({
         type: GET_PROFILE,
         payload: null
+      })
+    );
+};
+
+// Allow users to edit profile
+export const editProfile = (profileData, history, username) => dispatch => {
+  axios
+    .post("/api/profile", profileData)
+    .then(res => history.push(`/profile/${username}`))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
       })
     );
 };

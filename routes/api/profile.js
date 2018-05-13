@@ -104,17 +104,18 @@ router.post(
 router.get("/handle/:username", (req, res) => {
   const errors = {};
 
-  Profile.findOne({ username: { $regex: req.params.username, $options: "i" } })
+  Profile.findOne({
+    username: new RegExp("^" + req.params.username + "$", "i")
+  })
     .populate("user", ["username", "avatar"])
     .then(profile => {
       if (!profile) {
         errors.noprofile = "There is no profile for this user";
         res.status(404).json(errors);
+      } else {
+        res.json(profile);
       }
-
-      res.json(profile);
-    })
-    .catch(err => res.status(404).json(err));
+    });
 });
 
 // @route   GET api/profile/movie/:movie_id

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
@@ -9,6 +9,8 @@ import "./App.css";
 import { Provider } from "react-redux";
 import store from "./store";
 
+import PrivateRoute from "./components/common/PrivateRoute";
+
 import Navbar from "./components/layout/Navbar";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
@@ -16,6 +18,8 @@ import Posts from "./components/posts/Posts";
 import Movie from "./components/movie/Movie";
 import Post from "./components/post/Post";
 import Profile from "./components/profile/Profile";
+import EditProfile from "./components/edit-profile/EditProfile";
+import Notifications from "./components/notifications/Notifications";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -51,6 +55,20 @@ class App extends Component {
             <Route exact path="/media/:media/:movie_id" component={Movie} />
             <Route exact path="/post/:id" component={Post} />
             <Route exact path="/profile/:username" component={Profile} />
+            <Switch>
+              <PrivateRoute
+                exact
+                path="/edit-profile"
+                component={EditProfile}
+              />
+            </Switch>
+            <Switch>
+              <PrivateRoute
+                exact
+                path="/notifications"
+                component={Notifications}
+              />
+            </Switch>
           </div>
         </Router>
       </Provider>

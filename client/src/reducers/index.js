@@ -4,6 +4,7 @@ import errorReducer from "./errorReducer";
 import postReducer from "./postReducer";
 import movieReducer from "./movieReducer";
 import profileReducer from "./profileReducer";
+import notificationReducer from "./notificationReducer";
 
 // Combine all reducers
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
   errors: errorReducer,
   post: postReducer,
   movie: movieReducer,
-  profile: profileReducer
+  profile: profileReducer,
+  notification: notificationReducer
 });

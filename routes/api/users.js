@@ -32,62 +32,62 @@ router.post("/register", (req, res) => {
   }
 
   // Check if there is already a user with the same username
-  User.findOne({ username: { $regex: req.body.username, $options: "i" } }).then(
-    user => {
-      if (user) {
-        errors.username = "Username already exists.";
-        return res.status(400).json(errors);
-      } else {
-        // If not, check to see if there is a user with the same email
-        User.findOne({ email: req.body.email }).then(user => {
-          if (user) {
-            errors.email = "Email is already registered with another account.";
-            return res.status(400).json(errors);
-          } else {
-            // Bring in gravatar
-            const avatar = gravatar.url(req.body.email, {
-              s: "200", // Size
-              r: "pg", // Rating
-              d: "mm" // Default
+  User.findOne({
+    username: new RegExp("^" + req.body.username + "$", "i")
+  }).then(user => {
+    if (user) {
+      errors.username = "Username already exists.";
+      return res.status(400).json(errors);
+    } else {
+      // If not, check to see if there is a user with the same email
+      User.findOne({ email: req.body.email }).then(user => {
+        if (user) {
+          errors.email = "Email is already registered with another account.";
+          return res.status(400).json(errors);
+        } else {
+          // Bring in gravatar
+          const avatar = gravatar.url(req.body.email, {
+            s: "200", // Size
+            r: "pg", // Rating
+            d: "mm" // Default
+          });
+
+          // If username and email not in use, create user
+          const newUser = new User({
+            username: req.body.username,
+            email: req.body.email,
+            avatar,
+            password: req.body.password
+          });
+
+          // Encrypt the password using bcrypt
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+              if (err) throw err;
+
+              // Turn the user password into hash
+              newUser.password = hash;
+
+              // Send new user to database through mongoose
+              newUser
+                .save()
+                .then(user => {
+                  // Create a profile for this user
+                  const newProfile = new Profile({
+                    displayname: req.body.username,
+                    username: req.body.username,
+                    user: user._id
+                  }).save();
+
+                  res.json(user);
+                })
+                .catch(err => console.log(err));
             });
-
-            // If username and email not in use, create user
-            const newUser = new User({
-              username: req.body.username,
-              email: req.body.email,
-              avatar,
-              password: req.body.password
-            });
-
-            // Encrypt the password using bcrypt
-            bcrypt.genSalt(10, (err, salt) => {
-              bcrypt.hash(newUser.password, salt, (err, hash) => {
-                if (err) throw err;
-
-                // Turn the user password into hash
-                newUser.password = hash;
-
-                // Send new user to database through mongoose
-                newUser
-                  .save()
-                  .then(user => {
-                    // Create a profile for this user
-                    const newProfile = new Profile({
-                      displayname: req.body.username,
-                      username: req.body.username,
-                      user: user._id
-                    }).save();
-
-                    res.json(user);
-                  })
-                  .catch(err => console.log(err));
-              });
-            });
-          }
-        });
-      }
+          });
+        }
+      });
     }
-  );
+  });
 });
 
 // @route   GET api/users/login
@@ -101,7 +101,7 @@ router.post("/login", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  const username = { $regex: req.body.username, $options: "i" };
+  const username = new RegExp("^" + req.body.username + "$", "i");
   const password = req.body.password;
 
   // Find user by username

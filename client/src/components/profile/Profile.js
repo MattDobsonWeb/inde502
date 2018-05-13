@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import { getProfileByUsername } from "../../actions/profileActions";
+import Moment from "react-moment";
+import isEmpty from "../../validation/is-empty";
 
 class Profile extends Component {
   componentDidMount() {
@@ -18,10 +20,15 @@ class Profile extends Component {
     if (profile === null || loading) {
       profileContent = <Spinner />;
     } else {
+      const formatBirthday = (
+        <Moment format="YYYY-MM-DD">{profile.birthday}</Moment>
+      );
+
       profileContent = (
         <div className="container">
           <h1>{profile.user.username}</h1>
           <img src={profile.user.avatar} alt="" />
+          <p>{!isEmpty(profile.birthday) ? formatBirthday : null}</p>
         </div>
       );
     }
