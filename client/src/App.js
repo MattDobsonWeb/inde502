@@ -20,6 +20,7 @@ import Post from "./components/post/Post";
 import Profile from "./components/profile/Profile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import Notifications from "./components/notifications/Notifications";
+import FollowingPosts from "./components/following/FollowingPosts";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -55,6 +56,13 @@ class App extends Component {
             <Route exact path="/media/:media/:movie_id" component={Movie} />
             <Route exact path="/post/:id" component={Post} />
             <Route exact path="/profile/:username" component={Profile} />
+            <Switch>
+              <PrivateRoute
+                exact
+                path="/following-feed"
+                component={FollowingPosts}
+              />
+            </Switch>
             <Switch>
               <PrivateRoute
                 exact

@@ -334,7 +334,7 @@ router.post(
           if (!uniqueUser.includes(comment.username)) {
             uniqueUser.push(comment.username);
 
-            const newReplyNotifcation = new Notification({
+            const newReplyNotification = new Notification({
               toId: comment.user,
               toUsername: comment.username,
               fromId: req.user.id,
@@ -346,7 +346,7 @@ router.post(
               read: false
             });
 
-            newReplyNotifcation
+            newReplyNotification
               .save()
               .then(console.log("Reply notification Saved"));
           }

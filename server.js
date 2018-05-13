@@ -9,6 +9,7 @@ const profile = require("./routes/api/profile");
 const posts = require("./routes/api/posts");
 const movies = require("./routes/api/movies");
 const notifications = require("./routes/api/notifications");
+const following = require("./routes/api/following");
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use("/api/profile", profile);
 app.use("/api/posts", posts);
 app.use("/api/movies", movies);
 app.use("/api/notifications", notifications);
+app.use("/api/following", following);
 
 // For heroku use env.port, or locally run on port 5000
 const port = process.env.PORT || 5000;

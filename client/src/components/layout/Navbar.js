@@ -30,6 +30,12 @@ class Navbar extends Component {
           </li>
 
           <li className="nav-item">
+            <Link className="nav-link text-white" to="/following-feed">
+              Following Feed
+            </Link>
+          </li>
+
+          <li className="nav-item">
             <Link className="nav-link text-white" to="/notifications">
               Notifications ({unreadNotifications.amount})
             </Link>

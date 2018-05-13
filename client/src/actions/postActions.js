@@ -51,6 +51,26 @@ export const getPosts = () => dispatch => {
     );
 };
 
+// Get Posts
+export const getFollowingPosts = () => dispatch => {
+  dispatch(setPostLoading());
+
+  axios
+    .get("/api/following/posts")
+    .then(res =>
+      dispatch({
+        type: GET_POSTS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_POSTS,
+        payload: null
+      })
+    );
+};
+
 // Get Movie Posts
 export const getMoviePosts = movie_id => dispatch => {
   dispatch(setPostLoading());

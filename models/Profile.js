@@ -33,6 +33,32 @@ const ProfileSchema = new Schema({
       }
     }
   ],
+  following: [
+    {
+      username: {
+        type: String
+      },
+      userId: {
+        type: String
+      },
+      userAvatar: {
+        type: String
+      }
+    }
+  ],
+  followers: [
+    {
+      username: {
+        type: String
+      },
+      userId: {
+        type: String
+      },
+      userAvatar: {
+        type: String
+      }
+    }
+  ],
   date: {
     type: Date,
     default: Date.now
