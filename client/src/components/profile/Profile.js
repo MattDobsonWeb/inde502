@@ -5,6 +5,7 @@ import Spinner from "../common/Spinner";
 import { getProfileByUsername } from "../../actions/profileActions";
 import Moment from "react-moment";
 import isEmpty from "../../validation/is-empty";
+import ProfileHeader from "./ProfileHeader";
 
 class Profile extends Component {
   componentDidMount() {
@@ -13,31 +14,26 @@ class Profile extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const currentId = this.props.match.params.username;
+    const nextId = nextProps.match.params.username;
+
+    if (currentId !== nextId) {
+      this.props.getProfileByUsername(nextId);
+    }
+  }
+
   render() {
     const { profile, loading } = this.props.profile;
-    let profileContent;
+    let profileHeader;
 
     if (profile === null || loading) {
-      profileContent = <Spinner />;
+      profileHeader = <Spinner />;
     } else {
-      const formatBirthday = (
-        <Moment format="YYYY-MM-DD">{profile.birthday}</Moment>
-      );
-
-      profileContent = (
-        <div className="container">
-          <h1>{profile.user.username}</h1>
-          <img src={profile.user.avatar} alt="" />
-          <p>{!isEmpty(profile.birthday) ? formatBirthday : null}</p>
-        </div>
-      );
+      profileHeader = <ProfileHeader profile={profile} />;
     }
 
-    return (
-      <div>
-        <div>{profileContent}</div>
-      </div>
-    );
+    return <div>{profileHeader}</div>;
   }
 }
 

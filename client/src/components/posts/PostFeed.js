@@ -16,7 +16,7 @@ class PostFeed extends Component {
 
   componentDidMount() {
     const { posts } = this.props;
-    if (this.state.itemsToShow > posts.length) {
+    if (this.state.itemsToShow >= posts.length) {
       this.setState({ showButton: false });
     }
   }

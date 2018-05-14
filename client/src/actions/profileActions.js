@@ -1,6 +1,11 @@
 import axios from "axios";
 
-import { GET_PROFILE, PROFILE_LOADING, GET_ERRORS } from "./types";
+import {
+  GET_PROFILE,
+  GET_CURRENT_PROFILE,
+  PROFILE_LOADING,
+  GET_ERRORS
+} from "./types";
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
@@ -9,13 +14,13 @@ export const getCurrentProfile = () => dispatch => {
     .get("/api/profile")
     .then(res =>
       dispatch({
-        type: GET_PROFILE,
+        type: GET_CURRENT_PROFILE,
         payload: res.data
       })
     )
     .catch(err =>
       dispatch({
-        type: GET_PROFILE,
+        type: GET_CURRENT_PROFILE,
         payload: {}
       })
     );
@@ -46,6 +51,32 @@ export const editProfile = (profileData, history, username) => dispatch => {
   axios
     .post("/api/profile", profileData)
     .then(res => history.push(`/profile/${username}`))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Follow user
+export const followUser = username => dispatch => {
+  axios
+    .post(`/api/following/follow/${username}`)
+    .then(res => dispatch(getProfileByUsername(username)))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Follow user
+export const unfollowUser = username => dispatch => {
+  axios
+    .post(`/api/following/unfollow/${username}`)
+    .then(res => dispatch(getProfileByUsername(username)))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

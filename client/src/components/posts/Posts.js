@@ -3,18 +3,24 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import PostForm from "./PostForm";
 import PostFeed from "./PostFeed";
+import UserInfo from "./UserInfo";
 import Spinner from "../common/Spinner";
 import { getPosts } from "../../actions/postActions";
+import { getCurrentProfile } from "../../actions/profileActions";
 
 class Posts extends Component {
   componentDidMount() {
     this.props.getPosts();
+    this.props.getCurrentProfile();
   }
 
   render() {
     const { posts, loading } = this.props.post;
     const { isAuthenticated } = this.props.auth;
-    let postContent;
+    const { currentProfile } = this.props.profile;
+    const profileLoading = this.props.profile.loading;
+
+    let postContent, profileContent;
 
     if (posts === null || loading) {
       postContent = <Spinner />;
@@ -22,14 +28,16 @@ class Posts extends Component {
       postContent = <PostFeed posts={posts} />;
     }
 
+    if (currentProfile === null || profileLoading) {
+      profileContent = <Spinner />;
+    } else {
+      profileContent = <UserInfo currentProfile={currentProfile} />;
+    }
+
     return (
       <div className="container feed">
         <div className="row">
-          <div className="col-md-3">
-            <div className="text-center my-3 rounded box-shadow">
-              <h1>TODO: USERINFO</h1>
-            </div>
-          </div>
+          <div className="col-md-3">{profileContent}</div>
 
           <div className="col-md-6">
             <div className="d-flex align-items-center p-3 my-3 text-white-50 bg-salmon rounded box-shadow">
@@ -56,12 +64,14 @@ class Posts extends Component {
 Posts.propTypes = {
   getPosts: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   post: state.post,
-  auth: state.auth
+  auth: state.auth,
+  profile: state.profile
 });
 
-export default connect(mapStateToProps, { getPosts })(Posts);
+export default connect(mapStateToProps, { getPosts, getCurrentProfile })(Posts);

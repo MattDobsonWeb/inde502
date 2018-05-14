@@ -6,7 +6,7 @@ import Moment from "react-moment";
 
 class NotificationItem extends Component {
   render() {
-    const { notification, auth } = this.props;
+    const { notification } = this.props;
 
     let textContent;
 

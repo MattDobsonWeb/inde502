@@ -1,7 +1,13 @@
-import { GET_PROFILE, PROFILE_LOADING } from "../actions/types";
+import {
+  GET_PROFILE,
+  PROFILE_LOADING,
+  UPDATE_FOLLOWERS,
+  GET_CURRENT_PROFILE
+} from "../actions/types";
 
 const initialState = {
   profile: null,
+  currentProfile: null,
   loading: false
 };
 
@@ -16,6 +22,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         profile: action.payload,
+        loading: false
+      };
+    case GET_CURRENT_PROFILE:
+      return {
+        ...state,
+        currentProfile: action.payload,
         loading: false
       };
     default:

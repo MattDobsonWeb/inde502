@@ -51,7 +51,7 @@ class PostItem extends Component {
           <img
             src={post.avatar}
             alt=""
-            className="avatar mr-3 rounded-circle border-orange"
+            className="avatar mr-3 rounded border-orange"
           />
           <div className="media-body d-block">
             <p className="pb-3 mb-0 lh-125 border-gray">

@@ -43,9 +43,14 @@ class Navbar extends Component {
         </ul>
 
         <ul className="navbar-nav ml-auto">
+          <li className="nav-item align-self-center">
+            <Link className="nav-link text-white" to="/search">
+              <i className="fas fa-search mr-1" /> Search
+            </Link>
+          </li>
           <li className="nav-item dropdown">
             <a
-              className="nav-link dropdown-toggle text-white"
+              className="nav-link dropdown-toggle text-white align-self-center lh-100"
               href="http://example.com"
               id="dropdown07"
               data-toggle="dropdown"
@@ -53,7 +58,7 @@ class Navbar extends Component {
               aria-expanded="false"
             >
               <img
-                className="rounded-circle avatar-nav mr-2"
+                className="rounded avatar-nav mr-2 my-0"
                 src={user.avatar}
                 alt=""
                 title="You must have a Gravatar connected to your email to display an image"
@@ -94,7 +99,7 @@ class Navbar extends Component {
             </Link>
           </li>
         </ul>
-        <ul className="navbar-nav ml-auto self">
+        <ul className="navbar-nav ml-auto">
           <li className="nav-item align-self-center">
             <Link className="nav-link text-white" to="/register">
               Register

@@ -33,8 +33,8 @@ class EditProfile extends Component {
       this.setState({ errors: nextProps.errors });
     }
 
-    if (nextProps.profile.profile) {
-      const profile = nextProps.profile.profile;
+    if (nextProps.profile.currentProfile) {
+      const profile = nextProps.profile.currentProfile;
 
       // If profile field doesnt exist, make empty string
       profile.website = !isEmpty(profile.website) ? profile.website : "";

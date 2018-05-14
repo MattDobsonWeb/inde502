@@ -22,7 +22,7 @@ class Notifications extends Component {
 
     let notificationContent;
 
-    if (notifications === null) {
+    if (notifications === null || loading) {
       notificationContent = <Spinner />;
     } else {
       notificationContent = <NotificationFeed notifications={notifications} />;

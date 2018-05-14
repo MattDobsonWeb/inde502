@@ -57,7 +57,7 @@ class PostForm extends Component {
           <img
             src={user.avatar}
             alt=""
-            className="avatar mr-3 rounded-circle border-orange"
+            className="avatar mr-3 rounded border-orange"
           />
           <div className="media-body">
             <form onSubmit={this.onSubmit}>

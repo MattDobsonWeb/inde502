@@ -15,10 +15,10 @@ class NotificationFeed extends Component {
   }
 
   componentDidMount() {
-    // const { notifications } = this.props;
-    // if (this.state.itemsToShow > notifications.length) {
-    //   this.setState({ showButton: false });
-    // }
+    const { notifications } = this.props;
+    if (this.state.itemsToShow >= notifications.length) {
+      this.setState({ showButton: false });
+    }
   }
 
   showMore() {
