@@ -7,7 +7,10 @@ import { getUnreadNotifications } from "../../actions/notificationActions";
 
 class Navbar extends Component {
   componentDidMount() {
-    this.props.getUnreadNotifications();
+    const { isAuthenticated } = this.props.auth;
+    if (isAuthenticated) {
+      this.props.getUnreadNotifications();
+    }
   }
 
   onLogoutClick(e) {

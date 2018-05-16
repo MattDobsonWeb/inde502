@@ -10,8 +10,13 @@ import { getCurrentProfile } from "../../actions/profileActions";
 
 class Posts extends Component {
   componentDidMount() {
+    const { isAuthenticated } = this.props.auth;
+
     this.props.getPosts();
-    this.props.getCurrentProfile();
+
+    if (isAuthenticated) {
+      this.props.getCurrentProfile();
+    }
   }
 
   render() {
@@ -28,7 +33,7 @@ class Posts extends Component {
       postContent = <PostFeed posts={posts} />;
     }
 
-    if (currentProfile === null || profileLoading) {
+    if (currentProfile === null || !isAuthenticated) {
       profileContent = <Spinner />;
     } else {
       profileContent = <UserInfo currentProfile={currentProfile} />;
