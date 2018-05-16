@@ -37,7 +37,9 @@ class Posts extends Component {
     return (
       <div className="container feed">
         <div className="row">
-          <div className="col-md-3">{profileContent}</div>
+          <div className="col-md-3">
+            {isAuthenticated ? profileContent : null}
+          </div>
 
           <div className="col-md-6">
             <div className="d-flex align-items-center p-3 my-3 text-white-50 bg-salmon rounded box-shadow">

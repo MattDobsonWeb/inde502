@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const path = require("path");
 
 // Bring in API routes
 const users = require("./routes/api/users");
@@ -41,6 +42,16 @@ app.use("/api/movies", movies);
 app.use("/api/notifications", notifications);
 app.use("/api/following", following);
 app.use("/api/search", search);
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 // For heroku use env.port, or locally run on port 5000
 const port = process.env.PORT || 5000;

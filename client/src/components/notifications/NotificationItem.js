@@ -31,10 +31,11 @@ class NotificationItem extends Component {
     } else if (notification.type === "commentReply") {
       textContent = (
         <span>
-          has commented on a post you've commented on{" "}
+          has commented on a{" "}
           <Link to={`/post/${notification.reference}`} className="orange-link">
-            posts.
-          </Link>
+            post
+          </Link>{" "}
+          you've commented on.{" "}
         </span>
       );
     } else if (notification.type === "follow") {
