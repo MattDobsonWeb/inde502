@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import PrivateRoute from "./components/common/PrivateRoute";
+import AppContainer from "./AppContainer";
 
 import Navbar from "./components/layout/Navbar";
 import Login from "./components/auth/Login";
@@ -49,37 +50,39 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <div className="App">
-            <Navbar />
-            <Route exact path="/" component={Posts} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/media/:media/:movie_id" component={Movie} />
-            <Route exact path="/post/:id" component={Post} />
-            <Route exact path="/profile/:username" component={Profile} />
-            <Route exact path="/search" component={Search} />
-            <Switch>
-              <PrivateRoute
-                exact
-                path="/following-feed"
-                component={FollowingPosts}
-              />
-            </Switch>
-            <Switch>
-              <PrivateRoute
-                exact
-                path="/edit-profile"
-                component={EditProfile}
-              />
-            </Switch>
-            <Switch>
-              <PrivateRoute
-                exact
-                path="/notifications"
-                component={Notifications}
-              />
-            </Switch>
-          </div>
+          <AppContainer>
+            <div className="App">
+              <Navbar />
+              <Route exact path="/" component={Posts} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/media/:media/:movie_id" component={Movie} />
+              <Route exact path="/post/:id" component={Post} />
+              <Route exact path="/profile/:username" component={Profile} />
+              <Route exact path="/search" component={Search} />
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/following-feed"
+                  component={FollowingPosts}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/edit-profile"
+                  component={EditProfile}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/notifications"
+                  component={Notifications}
+                />
+              </Switch>
+            </div>
+          </AppContainer>
         </Router>
       </Provider>
     );

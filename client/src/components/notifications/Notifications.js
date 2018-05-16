@@ -14,7 +14,6 @@ class Notifications extends Component {
   componentDidMount() {
     this.props.getNotifications();
     this.props.markNotificationsRead();
-    this.props.getUnreadNotifications();
   }
 
   render() {

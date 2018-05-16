@@ -26,11 +26,18 @@ class Search extends Component {
   };
 
   getInfo = () => {
-    axios.get(`/api/search/media/${this.state.query}`).then(data => {
-      this.setState({
-        results: data.data
+    axios
+      .get(
+        `https://api.themoviedb.org/3/search/multi?api_key=9de0923a2225f7196ad07f894fe36ab8&language=en-US&query=${
+          this.state.query
+        }&page=1
+          }`
+      )
+      .then(data => {
+        this.setState({
+          results: data.data
+        });
       });
-    });
 
     axios.get(`/api/search/user/${this.state.query}`).then(users => {
       this.setState({
