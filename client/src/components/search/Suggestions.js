@@ -25,6 +25,7 @@ const Suggestions = props => {
       </Link>
     </div>
   ));
+
   const optionsMedia = props.results.slice(0, 5).map(r => (
     <div key={r.id}>
       <Link

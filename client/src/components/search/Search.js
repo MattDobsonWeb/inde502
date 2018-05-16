@@ -35,7 +35,7 @@ class Search extends Component {
       )
       .then(data => {
         this.setState({
-          results: data.data
+          results: data.data.results
         });
       });
 
