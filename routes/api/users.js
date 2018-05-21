@@ -120,7 +120,8 @@ router.post("/login", (req, res) => {
         const payload = {
           id: user.id,
           username: user.username,
-          avatar: user.avatar
+          avatar: user.avatar,
+          admin: user.admin
         };
 
         // Sign JsonWebToken
