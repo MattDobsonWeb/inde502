@@ -18,10 +18,11 @@ class Movie extends Component {
   render() {
     const { movieData, loading } = this.props.movie;
     const { posts } = this.props.post;
+    const postsLoading = this.props.post.loading;
 
     let movieContent;
 
-    if (movieData === null || loading) {
+    if (movieData === null || postsLoading || loading) {
       movieContent = <Spinner />;
     } else {
       movieContent = (
