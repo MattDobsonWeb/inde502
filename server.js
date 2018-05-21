@@ -35,15 +35,6 @@ app.use(passport.initialize());
 // enable ssl redirect
 app.use(sslRedirect());
 
-app.configure("production", () => {
-  app.use((req, res, next) => {
-    if (req.header("x-forwarded-proto") !== "https") {
-      res.redirect(`https://${req.header("host")}${req.url}`);
-      console.log("REDIRECT");
-    } else next();
-  });
-});
-
 // Passport Config
 require("./config/passport.js")(passport);
 
