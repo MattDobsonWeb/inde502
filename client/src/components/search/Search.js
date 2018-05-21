@@ -47,7 +47,7 @@ class Search extends Component {
             <div className="form-group mt-3">
               <input
                 placeholder="Search for..."
-                className="form-control search-form"
+                className="form-control navy-form"
                 ref={input => (this.search = input)}
                 onChange={this.handleInputChange}
               />

@@ -8,7 +8,7 @@ class PostFeed extends Component {
 
     this.state = {
       itemsToShow: 10,
-      showButton: true
+      showButton: false
     };
 
     this.showMore = this.showMore.bind(this);
@@ -16,8 +16,8 @@ class PostFeed extends Component {
 
   componentDidMount() {
     const { posts } = this.props;
-    if (this.state.itemsToShow >= posts.length) {
-      this.setState({ showButton: false });
+    if (this.state.itemsToShow <= posts.length) {
+      this.setState({ showButton: true });
     }
   }
 

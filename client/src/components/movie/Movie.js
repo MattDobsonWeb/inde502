@@ -30,7 +30,15 @@ class Movie extends Component {
           <div className="container">
             <div className="row">
               <div className="col-md-8 m-auto">
-                <PostFeed posts={posts} />
+                {posts.length > 0 ? (
+                  <PostFeed posts={posts} />
+                ) : (
+                  <div className="bg-navy border-bottom-neon text-center text-white rounded p-3 box-shadow mt-3">
+                    <h3 className="font-weight-bold mb-0">
+                      Currently No Posts To Show
+                    </h3>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
-import InputGroup from "../common/InputGroup";
 import { editProfile, getCurrentProfile } from "../../actions/profileActions";
 import isEmpty from "../../validation/is-empty";
-import Moment from "react-moment";
 
 class EditProfile extends Component {
   constructor(props) {
@@ -72,54 +70,74 @@ class EditProfile extends Component {
 
   render() {
     const { errors } = this.state;
+    const { auth } = this.props;
+
     return (
       <div className="edit-profile">
         <div className="container">
-          <div className="col-md-8 m-auto">
-            <h1 className="display-4 text-center">Edit Profile</h1>
-            <form onSubmit={this.onSubmit}>
-              <TextAreaFieldGroup
-                placeholder="Short Bio"
-                name="bio"
-                value={this.state.bio}
-                onChange={this.onChange}
-                error={errors.bio}
-                info="Tell us a little about yourself"
-              />
+          <div className="col-md-6 m-auto">
+            <div className="login bg-navy p-3 border-bottom-neon rounded mt-5 text-white box-shadow">
+              <h1 className="font-weight-bold text-neon text-center mb-3">
+                EDIT PROFILE
+              </h1>
+              <div className="avatar-section text-center">
+                <img
+                  src={auth.user.avatar}
+                  alt=""
+                  className="rounded mb-2"
+                  height="128px"
+                />
+                <p className="mb-3 text-center">
+                  We use Gravatar for user avatars, to create or edit your
+                  Gravatar go{" "}
+                  <a
+                    href="http://www.gravatar.com"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    here.
+                  </a>
+                </p>
+              </div>
 
-              <TextFieldGroup
-                placeholder="Location"
-                name="location"
-                value={this.state.location}
-                onChange={this.onChange}
-                error={errors.location}
-                info="City, town or country"
-              />
+              <form onSubmit={this.onSubmit}>
+                <TextAreaFieldGroup
+                  placeholder="Short Bio"
+                  name="bio"
+                  customClass="navy-form"
+                  value={this.state.bio}
+                  onChange={this.onChange}
+                  error={errors.bio}
+                  info="Tell us a little about yourself"
+                />
 
-              <TextFieldGroup
-                placeholder="Website"
-                name="website"
-                value={this.state.website}
-                onChange={this.onChange}
-                error={errors.website}
-                info="Could be your own website or a company one"
-              />
+                <TextFieldGroup
+                  placeholder="Location"
+                  name="location"
+                  customClass="navy-form"
+                  value={this.state.location}
+                  onChange={this.onChange}
+                  error={errors.location}
+                  info="City, town or country"
+                />
 
-              <TextFieldGroup
-                name="birthday"
-                type="date"
-                value={this.state.birthday}
-                onChange={this.onChange}
-                error={errors.birthday}
-                info="Enter your birthday!"
-              />
+                <TextFieldGroup
+                  placeholder="Website"
+                  name="website"
+                  customClass="navy-form"
+                  value={this.state.website}
+                  onChange={this.onChange}
+                  error={errors.website}
+                  info="Could be your own website or a company one"
+                />
 
-              <input
-                type="submit"
-                value="Submit"
-                className="btn btn-info btn-block mt-4"
-              />
-            </form>
+                <input
+                  type="submit"
+                  value="Submit"
+                  className="btn btn-outline-neon btn-block mt-4"
+                />
+              </form>
+            </div>
           </div>
         </div>
       </div>

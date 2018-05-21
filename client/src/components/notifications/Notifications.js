@@ -21,8 +21,14 @@ class Notifications extends Component {
 
     let notificationContent;
 
-    if (notifications === null || loading) {
+    if (notifications === null && loading) {
       notificationContent = <Spinner />;
+    } else if (notifications === null) {
+      notificationContent = (
+        <div className="bg-navy border-bottom-neon text-center text-white rounded p-3 box-shadow mt-3">
+          <h3 className="font-weight-bold mb-0">No Notifications To Show</h3>
+        </div>
+      );
     } else {
       notificationContent = <NotificationFeed notifications={notifications} />;
     }
