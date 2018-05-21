@@ -10,8 +10,12 @@ import { getCurrentProfile } from "../../actions/profileActions";
 
 class FollowingPosts extends Component {
   componentDidMount() {
+    const { isAuthenticated } = this.props.auth;
     this.props.getFollowingPosts();
-    this.props.getCurrentProfile();
+
+    if (isAuthenticated) {
+      this.props.getCurrentProfile();
+    }
   }
 
   render() {
@@ -28,7 +32,7 @@ class FollowingPosts extends Component {
       postContent = <PostFeed posts={posts} />;
     }
 
-    if (currentProfile === null || profileLoading) {
+    if (currentProfile === null) {
       profileContent = <Spinner />;
     } else {
       profileContent = <UserInfo currentProfile={currentProfile} />;
@@ -37,7 +41,9 @@ class FollowingPosts extends Component {
     return (
       <div className="container feed">
         <div className="row">
-          <div className="col-md-3">{profileContent}</div>
+          <div className="col-md-3 d-none d-md-block">
+            {isAuthenticated ? profileContent : null}
+          </div>
 
           <div className="col-md-6">
             <div className="d-flex align-items-center p-3 my-3 text-white-50 bg-salmon rounded box-shadow">
@@ -54,6 +60,14 @@ class FollowingPosts extends Component {
             </div>
             {isAuthenticated ? <PostForm /> : null}
             {postContent}
+          </div>
+
+          <div className="col-md-3">
+            <div className="text-center my-3 rounded box-shadow border-bottom-blue">
+              <div className="text-white bg-navy p-3 rounded border-bottom-neon">
+                <p className="mb-0">Copyright @ReelNatter</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

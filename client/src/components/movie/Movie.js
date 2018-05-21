@@ -28,8 +28,10 @@ class Movie extends Component {
         <div>
           <MovieHeader movieData={movieData} />
           <div className="container">
-            <div className="col-md-8 m-auto">
-              <PostFeed posts={posts} />
+            <div className="row">
+              <div className="col-md-8 m-auto">
+                <PostFeed posts={posts} />
+              </div>
             </div>
           </div>
         </div>

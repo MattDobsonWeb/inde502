@@ -43,7 +43,7 @@ class NotificationItem extends Component {
     }
 
     return (
-      <div className="post my-3 p-3 rounded box-shadow bg-navy text-white border-bottom-orange">
+      <div className="post my-3 p-3 rounded box-shadow bg-navy text-white border-bottom-neon">
         <div className="media">
           <Link
             className="orange-link"
@@ -52,7 +52,7 @@ class NotificationItem extends Component {
             <img
               src={notification.fromAvatar}
               alt=""
-              className="avatar mr-3 rounded-circle border-orange"
+              className="avatar mr-3 rounded"
             />
           </Link>
           <div className="media-body d-block">

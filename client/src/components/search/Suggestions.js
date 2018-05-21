@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import placeholder from "../common/placeholder.jpg";
 import Moment from "react-moment";
 import isEmpty from "../../validation/is-empty";
 
@@ -32,7 +33,7 @@ const Suggestions = props => {
         style={{ textDecoration: "none" }}
         to={`/media/${r.media_type}/${r.id}`}
       >
-        <div className="post my-3 p-3 rounded box-shadow bg-navy text-white border-bottom-orange">
+        <div className="post my-3 p-3 rounded box-shadow bg-navy text-white border-bottom-neon">
           <div className="media">
             {r.poster_path ? (
               <img
@@ -41,7 +42,14 @@ const Suggestions = props => {
                 alt=""
                 className="mr-3 rounded border-orange"
               />
-            ) : null}
+            ) : (
+              <img
+                style={{ width: "60px" }}
+                src={placeholder}
+                alt=""
+                className="mr-3 rounded border-orange"
+              />
+            )}
 
             <div className="media-body align-self-center text-white">
               <h2 className="mb-0">

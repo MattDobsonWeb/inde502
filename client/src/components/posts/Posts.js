@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PostForm from "./PostForm";
 import PostFeed from "./PostFeed";
 import UserInfo from "./UserInfo";
+import LoginSidebar from "./LoginSidebar";
 import Spinner from "../common/Spinner";
 import { getPosts } from "../../actions/postActions";
 import { getCurrentProfile } from "../../actions/profileActions";
@@ -33,7 +34,7 @@ class Posts extends Component {
       postContent = <PostFeed posts={posts} />;
     }
 
-    if (currentProfile === null || !isAuthenticated) {
+    if (currentProfile === null) {
       profileContent = <Spinner />;
     } else {
       profileContent = <UserInfo currentProfile={currentProfile} />;
@@ -42,8 +43,8 @@ class Posts extends Component {
     return (
       <div className="container feed">
         <div className="row">
-          <div className="col-md-3">
-            {isAuthenticated ? profileContent : null}
+          <div className="col-md-3 d-none d-md-block">
+            {isAuthenticated ? profileContent : <LoginSidebar />}
           </div>
 
           <div className="col-md-6">
@@ -61,6 +62,14 @@ class Posts extends Component {
             </div>
             {isAuthenticated ? <PostForm /> : null}
             {postContent}
+          </div>
+
+          <div className="col-md-3">
+            <div className="text-center my-3 rounded box-shadow border-bottom-blue">
+              <div className="text-white bg-navy p-3 rounded border-bottom-neon">
+                <p className="mb-0">Copyright @ReelNatter</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

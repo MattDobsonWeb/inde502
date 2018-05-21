@@ -27,33 +27,36 @@ class Navbar extends Component {
       <div className="collapse navbar-collapse" id="navbarsExample07">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link className="nav-link text-white" to="/">
-              Post Feed
+            <Link className="nav-link link-neon" to="/">
+              Discover Feed
             </Link>
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link text-white" to="/following-feed">
+            <Link className="nav-link link-neon" to="/following-feed">
               Following Feed
             </Link>
           </li>
 
           <li className="nav-item">
-            <Link className="nav-link text-white" to="/notifications">
-              Notifications ({unreadNotifications.amount})
+            <Link className="nav-link link-neon" to="/notifications">
+              Notifications{" "}
+              <span className="badge badge-pill badge-light">
+                {unreadNotifications.amount}
+              </span>
             </Link>
           </li>
         </ul>
 
         <ul className="navbar-nav ml-auto">
-          <li className="nav-item align-self-center">
-            <Link className="nav-link text-white" to="/search">
+          <li className="nav-item my-auto">
+            <Link className="nav-link link-neon" to="/search">
               <i className="fas fa-search mr-1" /> Search
             </Link>
           </li>
           <li className="nav-item dropdown">
             <a
-              className="nav-link dropdown-toggle text-white align-self-center lh-100"
+              className="nav-link dropdown-toggle mt-1 link-neon"
               href="http://example.com"
               id="dropdown07"
               data-toggle="dropdown"
@@ -72,18 +75,21 @@ class Navbar extends Component {
               className="dropdown-menu dropdown-menu-right text-right bg-navy text-white"
               aria-labelledby="dropdown07"
             >
-              <Link className="dropdown-item" to={`/profile/${user.username}`}>
+              <Link
+                className="dropdown-item link-neon"
+                to={`/profile/${user.username}`}
+              >
                 <i className="fas fa-user-circle mr-1" /> Your Profile
               </Link>
               <a
-                className="dropdown-item"
+                className="dropdown-item link-neon"
                 onClick={this.onLogoutClick.bind(this)}
                 href=""
               >
                 <i className="fas fa-sign-out-alt mr-1" /> Logout
               </a>
               <div className="dropdown-divider" />
-              <Link className="dropdown-item" to="/edit-profile">
+              <Link className="dropdown-item link-neon" to="/edit-profile">
                 <i className="fas fa-cog mr-1" /> Edit Profile
               </Link>
             </div>
@@ -97,19 +103,19 @@ class Navbar extends Component {
       <div className="collapse navbar-collapse" id="navbarsExample07">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link className="nav-link text-white" to="/">
-              Post Feed
+            <Link className="nav-link link-neon" to="/">
+              Discover Feed
             </Link>
           </li>
         </ul>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item align-self-center">
-            <Link className="nav-link text-white" to="/register">
+            <Link className="nav-link link-neon" to="/register">
               Register
             </Link>
           </li>
           <li className="nav-item align-self-center">
-            <Link className="nav-link text-orange" to="/login">
+            <Link className="nav-link text-white" to="/login">
               Login
             </Link>
           </li>
@@ -118,9 +124,9 @@ class Navbar extends Component {
     );
 
     return (
-      <nav className="navbar navbar-expand-lg bg-navy box-shadow border-bottom-orange">
+      <nav className="navbar navbar-expand-lg navbar-light bg-navy border-bottom-neon box-shadow">
         <div className="container">
-          <Link className="navbar-brand lh-100" to="/">
+          <Link className="navbar-brand logo" to="/">
             REEL<br />NATTER.
           </Link>
           <button

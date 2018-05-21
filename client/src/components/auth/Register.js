@@ -53,49 +53,57 @@ class Register extends Component {
     const { errors } = this.state;
 
     return (
-      <div className="register">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Sign Up</h1>
-              <p className="lead text-center">Create your ReelFans account</p>
-              <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  placeholder="Username"
-                  name="username"
-                  value={this.state.username}
-                  onChange={this.onChange}
-                  error={errors.username}
-                />
-                <TextFieldGroup
-                  placeholder="Email"
-                  name="email"
-                  type="email"
-                  value={this.state.email}
-                  onChange={this.onChange}
-                  error={errors.email}
-                  info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
-                />
-                <TextFieldGroup
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  error={errors.password}
-                />
-                <TextFieldGroup
-                  placeholder="Confirm Password"
-                  name="password2"
-                  type="password"
-                  value={this.state.password2}
-                  onChange={this.onChange}
-                  error={errors.password2}
-                />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
-            </div>
+      <div className="container">
+        <div className="col-md-6 m-auto">
+          <div className="login bg-navy p-3 border-bottom-neon rounded mt-5 text-white box-shadow">
+            <h1 className="font-weight-bold text-center text-neon">REGISTER</h1>
+            <p className="lead text-center">Create your Reel Natter account</p>
+            <form noValidate onSubmit={this.onSubmit}>
+              <TextFieldGroup
+                placeholder="Username"
+                name="username"
+                customClass="post-form"
+                value={this.state.username}
+                onChange={this.onChange}
+                error={errors.username}
+              />
+              <TextFieldGroup
+                placeholder="Email"
+                name="email"
+                type="email"
+                customClass="post-form"
+                value={this.state.email}
+                onChange={this.onChange}
+                error={errors.email}
+                info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
+              />
+              <TextFieldGroup
+                placeholder="Password"
+                name="password"
+                type="password"
+                customClass="post-form"
+                value={this.state.password}
+                onChange={this.onChange}
+                error={errors.password}
+              />
+              <TextFieldGroup
+                placeholder="Confirm Password"
+                name="password2"
+                type="password"
+                customClass="post-form"
+                value={this.state.password2}
+                onChange={this.onChange}
+                error={errors.password2}
+              />
+              <button
+                type="submit"
+                className="btn btn-outline-neon btn-lg btn-block mt-4"
+              >
+                REGISTER
+              </button>
+            </form>
           </div>
+          <p class="mt-3 mb-3 text-muted text-center">&copy; Reel Natter</p>
         </div>
       </div>
     );

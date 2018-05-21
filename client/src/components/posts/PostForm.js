@@ -38,9 +38,7 @@ class PostForm extends Component {
     };
 
     this.props.addPost(newPost);
-    if (isEmpty(errors)) {
-      this.setState({ text: "", movie: "" });
-    }
+    this.setState({ text: "", movie: "" });
   }
 
   onChange(e) {
@@ -52,13 +50,9 @@ class PostForm extends Component {
     const { user } = this.props.auth;
 
     return (
-      <div className="p-3 my-3 text-white rounded box-shadow bg-navy border-bottom-orange">
+      <div className="p-3 my-3 text-white rounded box-shadow bg-navy border-bottom-neon">
         <div className="media">
-          <img
-            src={user.avatar}
-            alt=""
-            className="avatar mr-3 rounded border-orange"
-          />
+          <img src={user.avatar} alt="" className="avatar mr-3 rounded" />
           <div className="media-body">
             <form onSubmit={this.onSubmit}>
               <div className="form-group mb-2 text-white">
@@ -82,7 +76,7 @@ class PostForm extends Component {
                 />
               </div>
               <div className="text-right">
-                <button type="submit" className="btn btn-outline-orange">
+                <button type="submit" className="btn btn-outline-neon">
                   Post
                 </button>
               </div>

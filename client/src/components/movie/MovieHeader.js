@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import isEmpty from "../../validation/is-empty";
+import currencyFormatter from "currency-formatter";
 
 class MovieHeader extends Component {
   render() {
@@ -34,63 +35,114 @@ class MovieHeader extends Component {
     return (
       <div className="movieHeader">
         <div
-          className="jumbotron jumbotron-fluid box-shadow mb-0 border-bottom-orange"
+          className="jumbotron jumbotron-fluid border-bottom-neon box-shadow text-light mb-0"
           style={backgroundImage}
         >
-          <div className="container text-center">
-            <div className="col-md-8 m-auto">
-              <div className="media text-white">
+          <div className="container">
+            <div className="col-lg-10 m-auto d-flex flex-sm-nowrap flex-wrap justify-content-center">
+              <div className="mr-sm-5 my-auto">
                 <img
                   src={imageURI}
                   alt=""
-                  className="align-self-center mr-4 rounded poster box-shadow"
+                  style={{ maxHeight: "400px", minWidth: "200px" }}
+                  className="rounded img-fluid drop-shadow"
                 />
-                <div className="media-body text-left align-self-center">
-                  <h1 className="mt-0 mb-0">
-                    <strong>
-                      {movieData.title ? movieData.title : movieData.name}
-                    </strong>
-                  </h1>
-                  <h4>
-                    <strong className="text-orange">
-                      {movieData.first_air_date
-                        ? `${tvFirstDate} - `
-                        : movieDate}
-                      {movieData.status === "Ended"
-                        ? tvLastDate
-                        : tvLastDate
-                          ? "Now"
-                          : null}
-                    </strong>
-                  </h4>
-                  <div className="movie-info text-white">
-                    <strong className="text-orange">Plot</strong>
-                    <p>{movieData.overview}</p>
-                    <strong className="text-orange">Director</strong>
-                    <p>{movieData.Director}</p>
-                    <strong className="text-orange">Cast</strong>
-                    <p>{movieData.Actors}</p>
-                  </div>
-                </div>
+              </div>
+              <div className="media-info my-auto pt-3">
+                <h1 className="font-weight-bold mb-0 lh-100 text-neon">
+                  {movieData.title ? movieData.title : movieData.name}
+                </h1>
+                <h3 className="font-weight-bold mb-3">
+                  {" "}
+                  {movieData.first_air_date ? `${tvFirstDate} - ` : movieDate}
+                  {movieData.status === "Ended"
+                    ? tvLastDate
+                    : tvLastDate
+                      ? "Now"
+                      : null}
+                </h3>
+
+                <h5 className="font-weight-bold text-neon">Overview</h5>
+                <p>{movieData.overview}</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="ratings p-3 box-shadow text-white bg-navy border-bottom-orange">
+        <div className="ratings p-3 box-shadow text-white bg-navy border-bottom-neon d-none d-md-block">
           <div className="container text-center">
             <div className="row">
               <div className="col-md-4 border-right">
-                <strong>{movieData.imdbVotes}</strong>
-                <p className="mb-0">IMDB Ratings</p>
+                {movieData.number_of_seasons ? (
+                  <span>
+                    <p className="font-weight-bold m-0">
+                      {movieData.number_of_seasons}{" "}
+                    </p>
+                    <p className="mb-0">Seasons</p>
+                  </span>
+                ) : movieData.budget ? (
+                  <span>
+                    <p className="font-weight-bold m-0">
+                      {currencyFormatter.format(`${movieData.budget}`, {
+                        code: "USD",
+                        precision: 0
+                      })}{" "}
+                    </p>
+                    <p className="mb-0">Budget</p>
+                  </span>
+                ) : (
+                  <span>
+                    <p className="font-weight-bold m-0">Unknown</p>
+                    <p className="mb-0">Budget</p>
+                  </span>
+                )}
               </div>
               <div className="col-md-4 border-right">
-                <strong>{movieData.imdbRating} / 10</strong>
-                <p className="mb-0">IMDB</p>
+                {movieData.number_of_episodes ? (
+                  <span>
+                    <p className="font-weight-bold m-0">
+                      {movieData.number_of_episodes}{" "}
+                    </p>
+                    <p className="mb-0">Episodes</p>
+                  </span>
+                ) : movieData.revenue ? (
+                  <span>
+                    <p className="font-weight-bold m-0">
+                      {currencyFormatter.format(`${movieData.revenue}`, {
+                        code: "USD",
+                        precision: 0
+                      })}{" "}
+                    </p>
+                    <p className="mb-0">Revenue</p>
+                  </span>
+                ) : (
+                  <span>
+                    <p className="font-weight-bold m-0">Unknown</p>
+                    <p className="mb-0">Revenue</p>
+                  </span>
+                )}
               </div>
               <div className="col-md-4">
-                <strong className="m">80%</strong>
-                <p className="mb-0 mt-0">Metacritic</p>
+                {movieData.episode_run_time ? (
+                  <span>
+                    <p className="font-weight-bold m-0">
+                      {movieData.episode_run_time} mins
+                    </p>
+                    <p className="mb-0">Episode Run Time</p>
+                  </span>
+                ) : movieData.runtime ? (
+                  <span>
+                    <p className="font-weight-bold m-0">
+                      {movieData.runtime} mins
+                    </p>
+                    <p className="mb-0">Run Time</p>
+                  </span>
+                ) : (
+                  <span>
+                    <p className="font-weight-bold m-0">Unknown</p>
+                    <p className="mb-0">Run Time</p>
+                  </span>
+                )}
               </div>
             </div>
           </div>

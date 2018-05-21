@@ -43,6 +43,7 @@ class ProfileHeader extends Component {
   render() {
     const { profile } = this.props.profile;
     const { user, isAuthenticated } = this.props.auth;
+    const { posts } = this.props;
 
     let followButton;
 
@@ -53,7 +54,7 @@ class ProfileHeader extends Component {
 
     return (
       <div className="movieHeader">
-        <div className="jumbotron jumbotron-fluid bg-navy text-white box-shadow mb-0 border-bottom-orange">
+        <div className="jumbotron jumbotron-fluid bg-navy text-white box-shadow mb-0 border-bottom-neon">
           <div className="container text-center">
             <div className="col-md-8 m-auto">
               <img
@@ -74,17 +75,17 @@ class ProfileHeader extends Component {
                 ) : null}
               </div>
 
-              {user.username !== profile.user.username || !isAuthenticated ? (
+              {user.username !== profile.user.username && isAuthenticated ? (
                 this.findUserFollowing(profile.followers) ? (
                   <div
-                    className="btn btn-outline-orange mt-3"
+                    className="btn btn-outline-neon mt-3"
                     onClick={this.onClick}
                   >
                     UNFOLLOW
                   </div>
                 ) : (
                   <div
-                    className="btn btn-outline-orange mt-3"
+                    className="btn btn-outline-neon mt-3"
                     onClick={this.onClick}
                   >
                     FOLLOW
@@ -95,11 +96,11 @@ class ProfileHeader extends Component {
           </div>
         </div>
 
-        <div className="ratings p-3 box-shadow text-white bg-navy border-bottom-orange">
+        <div className="ratings p-3 box-shadow text-white bg-navy border-bottom-neon">
           <div className="container text-center">
             <div className="row">
               <div className="col-md-4 border-right">
-                <strong />
+                <strong>{posts.length}</strong>
                 <p className="mb-0">Posts</p>
               </div>
               <div className="col-md-4 border-right">
@@ -123,7 +124,8 @@ ProfileHeader.propTypes = {
   getProfileByUsername: PropTypes.func.isRequired,
   unfollowUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  posts: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({

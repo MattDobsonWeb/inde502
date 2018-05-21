@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   constructor() {
@@ -52,36 +53,45 @@ class Login extends Component {
     const { errors } = this.state;
 
     return (
-      <div className="login">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Log In</h1>
-              <p className="lead text-center">
-                Sign in to your DevConnector account
-              </p>
-              <form onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  placeholder="Username"
-                  name="username"
-                  type="text"
-                  value={this.state.username}
-                  onChange={this.onChange}
-                  error={errors.username}
-                />
+      <div className="container">
+        <div className="col-md-6 m-auto">
+          <div className="login bg-navy p-3 border-bottom-neon rounded mt-5 text-white box-shadow">
+            <h1 className="text-center font-weight-bold text-neon">LOG IN</h1>
+            <p className="lead text-center">
+              Sign in to your Reel Natter account.
+            </p>
+            <form onSubmit={this.onSubmit}>
+              <TextFieldGroup
+                placeholder="Username"
+                name="username"
+                type="text"
+                customClass="post-form"
+                value={this.state.username}
+                onChange={this.onChange}
+                error={errors.username}
+              />
 
-                <TextFieldGroup
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  error={errors.password}
-                />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
-            </div>
+              <TextFieldGroup
+                placeholder="Password"
+                name="password"
+                type="password"
+                customClass="post-form"
+                value={this.state.password}
+                onChange={this.onChange}
+                error={errors.password}
+              />
+              <button
+                type="submit"
+                className="btn btn-outline-neon btn-lg btn-block mt-4"
+              >
+                LOG IN
+              </button>
+            </form>
+            <p className="text-center p-0 m-0 mt-3">
+              Not got an account? <Link to="/register">Register Here</Link>
+            </p>
           </div>
+          <p className="mt-3 mb-3 text-muted text-center">&copy; Reel Natter</p>
         </div>
       </div>
     );

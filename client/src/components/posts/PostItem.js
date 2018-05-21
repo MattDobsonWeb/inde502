@@ -46,7 +46,7 @@ class PostItem extends Component {
     );
 
     return (
-      <div className="post my-3 p-3 rounded box-shadow bg-navy text-white border-bottom-orange">
+      <div className="my-3 p-3 bg-navy rounded border-bottom-neon box-shadow text-white">
         <div className="media">
           <img
             src={post.avatar}
@@ -54,12 +54,46 @@ class PostItem extends Component {
             className="avatar mr-3 rounded border-orange"
           />
           <div className="media-body d-block">
-            <p className="pb-3 mb-0 lh-125 border-gray">
-              <strong className="mb-0 mr-3">{post.username}</strong>
-              <span className="float-right">
-                <Moment fromNow>{post.date}</Moment>
-              </span>
+            <div className="post-header">
+              <strong className="mb-0 mr3">dobbo</strong>
+              <div className="dropdown show float-right">
+                <a
+                  className="dropdown-toggle"
+                  href="https://example.com"
+                  id="dropdownMenuLink"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  6d.
+                </a>
 
+                <div
+                  className="dropdown-menu dropdown-menu-right"
+                  aria-labelledby="dropdownMenuLink"
+                >
+                  <Link className="dropdown-item" to={`/post/${post._id}`}>
+                    View Post
+                  </Link>
+
+                  {/* If it is current users post, allow to delete */}
+                  {post.user === auth.user.id ? (
+                    <span>
+                      <div className="dropdown-divider" />
+                      <a
+                        className="dropdown-item"
+                        onClick={this.onDeleteClick.bind(this, post._id)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        Delete Post
+                      </a>
+                    </span>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+
+            <p className="pb-3 mb-0 lh-125 border-gray">
               <span className="d-block mb-3">
                 <Link className="orange-link" to={`/profile/${post.username}`}>
                   @{post.username}
@@ -73,52 +107,51 @@ class PostItem extends Component {
               {showActions ? (
                 this.findUserLike(post.likes) ? (
                   <span>
-                    <button
-                      onClick={this.onLikeClick.bind(this, post._id)}
-                      type="button"
-                      className="btn btn-outline-orange mr-1"
-                    >
-                      <i
-                        className={classnames("fas fa-thumbs-up", {
-                          "text-info": this.findUserLike(post.likes)
-                        })}
-                      />
-                      <span className="badge">{post.likes.length}</span>
-                    </button>
-                    <Link
-                      to={`/post/${post._id}`}
-                      className="btn btn-outline-orange mr-1"
-                    >
-                      Comments ({post.comments.length})
-                    </Link>
+                    <div className="btn-group">
+                      <button
+                        onClick={this.onLikeClick.bind(this, post._id)}
+                        type="button"
+                        className="btn btn-outline-neon my-2"
+                      >
+                        <i
+                          className={classnames("fas fa-thumbs-up", {
+                            "text-neon": this.findUserLike(post.likes)
+                          })}
+                        />
+                        <span className="badge">{post.likes.length}</span>
+                      </button>
+                      <Link
+                        to={`/post/${post._id}`}
+                        className="btn btn-outline-neon my-2"
+                      >
+                        Comments ({post.comments.length})
+                      </Link>
+                    </div>
                   </span>
                 ) : (
                   <span>
-                    <button
-                      onClick={this.onLikeClick.bind(this, post._id)}
-                      type="button"
-                      className="btn btn-outline-orange mr-1"
-                    >
-                      <i className={classnames("fas fa-thumbs-up")} />
-                      <span className="badge">{post.likes.length}</span>
-                    </button>
-                    <Link
-                      to={`/post/${post._id}`}
-                      className="btn btn-outline-orange mr-1"
-                    >
-                      Comments ({post.comments.length})
-                    </Link>
+                    <div className="btn-group">
+                      <button
+                        onClick={this.onLikeClick.bind(this, post._id)}
+                        type="button"
+                        className="btn btn-outline-neon my-2"
+                      >
+                        <i
+                          className={classnames("fas fa-thumbs-up text-white")}
+                        />
+                        <span className="badge text-white">
+                          {post.likes.length}
+                        </span>
+                      </button>
+                      <Link
+                        to={`/post/${post._id}`}
+                        className="btn btn-outline-neon my-2"
+                      >
+                        Comments ({post.comments.length})
+                      </Link>
+                    </div>
                   </span>
                 )
-              ) : null}
-              {post.user === auth.user.id ? (
-                <button
-                  onClick={this.onDeleteClick.bind(this, post._id)}
-                  type="button"
-                  className="btn btn-outline-danger mr-1"
-                >
-                  <i className="fas fa-times" />
-                </button>
               ) : null}
             </span>
 

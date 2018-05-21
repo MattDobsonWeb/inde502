@@ -5,7 +5,8 @@ import {
   DELETE_POST,
   GET_POST,
   UPDATE_LIKES,
-  GET_MOVIE_POSTS
+  GET_MOVIE_POSTS,
+  GET_PROFILE_POSTS
 } from "../actions/types";
 
 const initialState = {
@@ -29,6 +30,12 @@ export default function(state = initialState, action) {
         loading: false
       };
     case GET_MOVIE_POSTS:
+      return {
+        ...state,
+        posts: action.payload,
+        loading: false
+      };
+    case GET_PROFILE_POSTS:
       return {
         ...state,
         posts: action.payload,

@@ -82,7 +82,31 @@ export const getMoviePosts = movie_id => dispatch => {
         payload: res.data
       })
     )
-    .catch(err => console.log(err));
+    .catch(err =>
+      dispatch({
+        type: GET_POSTS,
+        payload: null
+      })
+    );
+};
+
+// Get Users Posts
+export const getProfilePosts = username => dispatch => {
+  dispatch(setPostLoading());
+  axios
+    .get(`/api/posts/user/${username}`)
+    .then(res =>
+      dispatch({
+        type: GET_MOVIE_POSTS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_POSTS,
+        payload: null
+      })
+    );
 };
 
 // Get Single Post

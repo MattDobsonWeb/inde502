@@ -48,7 +48,7 @@ class PostFeed extends Component {
           .map(post => <PostItem key={post._id} post={post} />)}
         {showButton ? (
           <a style={{ cursor: "pointer" }} onClick={this.showMore}>
-            <div className="bg-navy text-white p-2 mb-3 text-center rounded border-bottom-orange">
+            <div className="bg-navy text-white p-2 mb-3 text-center rounded border-bottom-neon">
               <p className="mb-0">SHOW MORE</p>
             </div>
           </a>
