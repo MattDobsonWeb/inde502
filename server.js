@@ -50,6 +50,7 @@ app.use("/api/search", search);
 
 app.enable("trust proxy"); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
 
+// Limit API Requests
 const apiLimiter = new RateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100,
@@ -57,7 +58,7 @@ const apiLimiter = new RateLimit({
 });
 
 // only apply to requests that begin with /api/
-app.use("/api/users", apiLimiter);
+app.use("/api/users/", apiLimiter);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
