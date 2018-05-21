@@ -24,7 +24,6 @@ class Posts extends Component {
     const { posts, loading } = this.props.post;
     const { isAuthenticated } = this.props.auth;
     const { currentProfile } = this.props.profile;
-    const profileLoading = this.props.profile.loading;
 
     let postContent, profileContent;
 

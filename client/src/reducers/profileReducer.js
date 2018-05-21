@@ -1,7 +1,6 @@
 import {
   GET_PROFILE,
   PROFILE_LOADING,
-  UPDATE_FOLLOWERS,
   GET_CURRENT_PROFILE
 } from "../actions/types";
 

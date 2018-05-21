@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import { getProfileByUsername } from "../../actions/profileActions";
 import { getProfilePosts } from "../../actions/postActions";
-import Moment from "react-moment";
-import isEmpty from "../../validation/is-empty";
 import ProfileHeader from "./ProfileHeader";
 import PostFeed from "../posts/PostFeed";
 

@@ -45,13 +45,6 @@ class ProfileHeader extends Component {
     const { user, isAuthenticated } = this.props.auth;
     const { posts } = this.props;
 
-    let followButton;
-
-    if (user.username === profile.user.username || !isAuthenticated) {
-      followButton = null;
-    } else {
-    }
-
     return (
       <div className="movieHeader">
         <div className="jumbotron jumbotron-fluid bg-navy text-white box-shadow mb-0 border-bottom-neon">

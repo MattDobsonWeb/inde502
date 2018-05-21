@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import { addPost } from "../../actions/postActions";
 import InputGroup from "../common/InputGroup";
-import isEmpty from "../../validation/is-empty";
 
 class PostForm extends Component {
   constructor(props) {
@@ -26,7 +25,6 @@ class PostForm extends Component {
   }
   onSubmit(e) {
     const { user } = this.props.auth;
-    const { errors } = this.props;
 
     e.preventDefault();
 

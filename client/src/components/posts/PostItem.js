@@ -65,7 +65,7 @@ class PostItem extends Component {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  6d.
+                  <Moment fromNow>{post.date}</Moment>
                 </a>
 
                 <div
