@@ -60,11 +60,11 @@ router.post(
             } else if (isEmpty(data.movie_results)) {
               const newPost = new Post({
                 text: req.body.text,
-                username: req.body.username,
+                username: req.user.username,
                 movieTitle: data.tv_results[0].name,
                 movieId: data.tv_results[0].id,
                 movieMedia: "tv",
-                avatar: req.body.avatar,
+                avatar: req.user.avatar,
                 user: req.user.id
               });
 
@@ -73,11 +73,11 @@ router.post(
             } else {
               const newPost = new Post({
                 text: req.body.text,
-                username: req.body.username,
+                username: req.user.username,
                 movieTitle: data.movie_results[0].title,
                 movieId: data.movie_results[0].id,
                 movieMedia: "movie",
-                avatar: req.body.avatar,
+                avatar: req.user.avatar,
                 user: req.user.id
               });
 
@@ -111,11 +111,11 @@ router.post(
 
               const newPost = new Post({
                 text: req.body.text,
-                username: req.body.username,
+                username: req.user.username,
                 movieTitle: title,
                 movieId: data.results[0].id,
                 movieMedia: data.results[0].media_type,
-                avatar: req.body.avatar,
+                avatar: req.user.avatar,
                 user: req.user.id
               });
 
@@ -128,8 +128,8 @@ router.post(
       // If no movie is in the post
       const newPost = new Post({
         text: req.body.text,
-        username: req.body.username,
-        avatar: req.body.avatar,
+        username: req.user.username,
+        avatar: req.user.avatar,
         user: req.user.id
       });
 

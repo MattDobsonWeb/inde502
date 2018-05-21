@@ -48,7 +48,7 @@ class CommentForm extends Component {
     return (
       <div className="post-form mb-3 border-0 box-shadow rounded">
         <div className="card card-info border-0">
-          <div className="card-header bg-navy border-bottom-orange text-white">
+          <div className="card-header bg-navy border-bottom-neon text-white">
             Post a comment...
           </div>
           <div className="card-body bg-navy rounded-bottom">
@@ -64,7 +64,7 @@ class CommentForm extends Component {
                 />
               </div>
               <div className="text-right">
-                <button type="submit" className="btn btn-outline-orange">
+                <button type="submit" className="btn btn-outline-neon">
                   Submit
                 </button>
               </div>
