@@ -77,7 +77,7 @@ class PostItem extends Component {
                   </Link>
 
                   {/* If it is current users post, allow to delete */}
-                  {post.user === auth.user.id ? (
+                  {post.user === auth.user.id || auth.user.admin ? (
                     <span>
                       <div className="dropdown-divider" />
                       <a

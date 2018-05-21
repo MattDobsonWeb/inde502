@@ -72,11 +72,12 @@ router.post("/register", (req, res) => {
               newUser
                 .save()
                 .then(user => {
+                  console.log(user.id);
                   // Create a profile for this user
                   const newProfile = new Profile({
                     displayname: req.body.username,
                     username: req.body.username,
-                    user: user._id
+                    user: user.id
                   }).save();
 
                   res.json(user);

@@ -93,7 +93,7 @@ class ProfileHeader extends Component {
           <div className="container text-center">
             <div className="row">
               <div className="col-md-4 border-right">
-                <strong>{posts.length}</strong>
+                <strong>{posts ? posts.length : null}</strong>
                 <p className="mb-0">Posts</p>
               </div>
               <div className="col-md-4 border-right">

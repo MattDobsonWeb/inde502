@@ -19,6 +19,7 @@
     "classnames": "^2.2.5",
     "concurrently": "^3.5.1",
     "express": "^4.16.3",
+    "express-rate-limit": "^2.11.0",
     "gravatar": "^1.6.0",
     "heroku-ssl-redirect": "0.0.4",
     "http": "0.0.0",

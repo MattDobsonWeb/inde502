@@ -159,13 +159,8 @@ router.get("/user/:username", (req, res) => {
     .then(profile => {
       Post.find({ user: profile.user })
         .sort({ date: -1 })
-        .then(posts => {
-          if (isEmpty(posts))
-            res
-              .status(404)
-              .json({ nopostsfound: "No posts found from this user" });
-          else res.json(posts);
-        });
+        .then(posts => res.json(posts))
+        .catch(err => res.status(404).json({ nopostfound: "No posts found" }));
     })
     .catch(err => res.status(404).json({ nouserfound: "No user found" }));
 });
@@ -192,7 +187,7 @@ router.delete(
       Post.findById(req.params.id)
         .then(post => {
           // Check for post owner
-          if (post.user.toString() !== req.user.id) {
+          if (post.user.toString() !== req.user.id && !req.user.admin) {
             return res
               .status(401)
               .json({ notauthorized: "User not authorized" });
@@ -387,6 +382,19 @@ router.delete(
           return res
             .status(404)
             .json({ commentnotexists: "Comment does not exist" });
+        }
+
+        // Get commment
+        const commentCheck = post.comments.filter(
+          comment => comment._id.toString() === req.params.comment_id
+        );
+
+        // Check if comment is posted by user
+        if (
+          commentCheck[0].user.toString() !== req.user.id &&
+          !req.user.admin
+        ) {
+          return res.status(401).json({ notauthorized: "User not authorized" });
         }
 
         // Get remove index

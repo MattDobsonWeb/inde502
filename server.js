@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const path = require("path");
 const sslRedirect = require("heroku-ssl-redirect");
+const RateLimit = require("express-rate-limit");
 
 // Bring in API routes
 const users = require("./routes/api/users");
@@ -46,6 +47,17 @@ app.use("/api/movies", movies);
 app.use("/api/notifications", notifications);
 app.use("/api/following", following);
 app.use("/api/search", search);
+
+app.enable("trust proxy"); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
+
+const apiLimiter = new RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  delayMs: 0 // disabled
+});
+
+// only apply to requests that begin with /api/
+app.use("/api/users", apiLimiter);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {

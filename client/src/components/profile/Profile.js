@@ -21,6 +21,7 @@ class Profile extends Component {
 
     if (currentId !== nextId) {
       this.props.getProfileByUsername(nextId);
+      this.props.getProfilePosts(nextId);
     }
   }
 

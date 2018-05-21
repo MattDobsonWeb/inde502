@@ -44,7 +44,7 @@ class CommentItem extends Component {
                   </Link>
 
                   {/* If it is current users post, allow to delete */}
-                  {comment.user === auth.user.id ? (
+                  {comment.user === auth.user.id || auth.user.admin ? (
                     <span>
                       <div className="dropdown-divider" />
                       <a
