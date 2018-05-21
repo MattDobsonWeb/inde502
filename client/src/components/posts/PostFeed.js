@@ -12,12 +12,13 @@ class PostFeed extends Component {
     };
 
     this.showMore = this.showMore.bind(this);
+    this.checkShowButton = this.checkShowButton.bind(this);
   }
 
-  componentDidMount() {
+  checkShowButton() {
     const { posts } = this.props;
     if (this.state.itemsToShow <= posts.length) {
-      this.setState({ showButton: true });
+      return true;
     }
   }
 
@@ -46,7 +47,7 @@ class PostFeed extends Component {
         {posts
           .slice(0, this.state.itemsToShow)
           .map(post => <PostItem key={post._id} post={post} />)}
-        {showButton ? (
+        {this.checkShowButton() ? (
           <a style={{ cursor: "pointer" }} onClick={this.showMore}>
             <div className="bg-navy text-white p-2 mb-3 text-center rounded border-bottom-neon">
               <p className="mb-0">SHOW MORE</p>
