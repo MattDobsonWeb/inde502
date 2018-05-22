@@ -5,9 +5,11 @@ import PostForm from "./PostForm";
 import PostFeed from "./PostFeed";
 import UserInfo from "./UserInfo";
 import LoginSidebar from "./LoginSidebar";
+import FeaturedMovies from "./FeaturedMovies";
 import Spinner from "../common/Spinner";
 import { getPosts } from "../../actions/postActions";
 import { getCurrentProfile } from "../../actions/profileActions";
+import isEmpty from "../../validation/is-empty";
 
 class Posts extends Component {
   componentDidMount() {
@@ -33,40 +35,43 @@ class Posts extends Component {
       postContent = <PostFeed posts={posts} />;
     }
 
-    if (currentProfile === null) {
+    if (currentProfile === null || isEmpty(currentProfile)) {
       profileContent = <Spinner />;
     } else {
       profileContent = <UserInfo currentProfile={currentProfile} />;
     }
 
     return (
-      <div className="container feed">
-        <div className="row">
-          <div className="col-md-3 d-none d-md-block">
-            {isAuthenticated ? profileContent : <LoginSidebar />}
-          </div>
-
-          <div className="col-md-6">
-            <div className="d-flex align-items-center p-3 my-3 text-white-50 bg-salmon rounded box-shadow">
-              <i className="fab fa-patreon fa-3x patreon mr-3" />
-              <div className="lh-100">
-                <h6 className="mb-0 text-white lh 100">
-                  Support Us On Patreon!
-                </h6>
-                <small>
-                  ReelFans costs a lot of money to maintain in server costs and
-                  it would be great if you could support us!
-                </small>
-              </div>
+      <div>
+        <FeaturedMovies />
+        <div className="container feed">
+          <div className="row">
+            <div className="col-md-3 d-none d-md-block">
+              {isAuthenticated ? profileContent : <LoginSidebar />}
             </div>
-            {isAuthenticated ? <PostForm /> : null}
-            {postContent}
-          </div>
 
-          <div className="col-md-3">
-            <div className="text-center my-3 rounded box-shadow border-bottom-blue">
-              <div className="text-white bg-navy p-3 rounded border-bottom-neon">
-                <p className="mb-0">Copyright @ReelNatter</p>
+            <div className="col-md-6">
+              <div className="d-flex align-items-center p-3 my-3 text-white-50 bg-salmon rounded box-shadow">
+                <i className="fab fa-patreon fa-3x patreon mr-3" />
+                <div className="lh-100">
+                  <h6 className="mb-0 text-white lh 100">
+                    Support Us On Patreon!
+                  </h6>
+                  <small>
+                    ReelFans costs a lot of money to maintain in server costs
+                    and it would be great if you could support us!
+                  </small>
+                </div>
+              </div>
+              {isAuthenticated ? <PostForm /> : null}
+              {postContent}
+            </div>
+
+            <div className="col-md-3">
+              <div className="text-center my-3 rounded box-shadow border-bottom-blue">
+                <div className="text-white bg-navy p-3 rounded border-bottom-neon">
+                  <p className="mb-0">Copyright @ReelNatter</p>
+                </div>
               </div>
             </div>
           </div>

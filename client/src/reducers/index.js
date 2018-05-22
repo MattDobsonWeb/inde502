@@ -5,6 +5,7 @@ import postReducer from "./postReducer";
 import movieReducer from "./movieReducer";
 import profileReducer from "./profileReducer";
 import notificationReducer from "./notificationReducer";
+import adminReducer from "./adminReducer";
 
 // Combine all reducers
 export default combineReducers({
@@ -13,5 +14,6 @@ export default combineReducers({
   post: postReducer,
   movie: movieReducer,
   profile: profileReducer,
-  notification: notificationReducer
+  notification: notificationReducer,
+  admin: adminReducer
 });

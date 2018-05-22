@@ -40,7 +40,6 @@ class PostFeed extends Component {
 
   render() {
     const { posts } = this.props;
-    const { showButton } = this.state;
 
     return (
       <div>

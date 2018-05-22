@@ -14,6 +14,7 @@ const movies = require("./routes/api/movies");
 const notifications = require("./routes/api/notifications");
 const following = require("./routes/api/following");
 const search = require("./routes/api/search");
+const admin = require("./routes/api/admin");
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use("/api/movies", movies);
 app.use("/api/notifications", notifications);
 app.use("/api/following", following);
 app.use("/api/search", search);
+app.use("/api/admin", admin);
 
 app.enable("trust proxy"); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
 

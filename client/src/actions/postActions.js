@@ -75,7 +75,7 @@ export const getFollowingPosts = () => dispatch => {
 export const getMoviePosts = movie_id => dispatch => {
   dispatch(setPostLoading());
   axios
-    .get(`/api/movies/${movie_id}`)
+    .get(`/api/movies/posts/${movie_id}`)
     .then(res =>
       dispatch({
         type: GET_MOVIE_POSTS,

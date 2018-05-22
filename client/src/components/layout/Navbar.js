@@ -72,7 +72,7 @@ class Navbar extends Component {
               {user.username}
             </a>
             <div
-              className="dropdown-menu dropdown-menu-right text-right bg-navy text-white"
+              className="dropdown-menu dropdown-menu-right bg-navy text-white"
               aria-labelledby="dropdown07"
             >
               <Link
@@ -92,6 +92,12 @@ class Navbar extends Component {
               <Link className="dropdown-item link-neon" to="/edit-profile">
                 <i className="fas fa-cog mr-1" /> Edit Profile
               </Link>
+
+              {user.admin ? (
+                <Link className="dropdown-item link-neon" to="/admin">
+                  <i className="fas fa-key" /> Admin Panel
+                </Link>
+              ) : null}
             </div>
           </li>
         </ul>
@@ -109,12 +115,12 @@ class Navbar extends Component {
           </li>
         </ul>
         <ul className="navbar-nav ml-auto">
-          <li className="nav-item align-self-center">
+          <li className="nav-item">
             <Link className="nav-link link-neon" to="/register">
               Register
             </Link>
           </li>
-          <li className="nav-item align-self-center">
+          <li className="nav-item">
             <Link className="nav-link text-white" to="/login">
               Login
             </Link>
@@ -124,19 +130,18 @@ class Navbar extends Component {
     );
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-navy border-bottom-neon box-shadow">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-navy border-bottom-neon box-shadow">
         <div className="container">
           <Link className="navbar-brand logo" to="/">
             REEL<br />NATTER.
           </Link>
+
           <button
-            className="navbar-toggler"
+            className="navbar-toggler ml-auto custom-toggler"
             type="button"
             data-toggle="collapse"
             data-target="#navbarsExample07"
             aria-controls="navbarsExample07"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon" />
           </button>

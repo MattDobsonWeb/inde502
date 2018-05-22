@@ -1,11 +1,13 @@
 import {
   GET_MOVIE_DATA,
   POST_LOADING,
-  MOVIE_DATA_LOADING
+  MOVIE_DATA_LOADING,
+  GET_FEATURED_MOVIES
 } from "../actions/types";
 
 const initialState = {
   movieData: {},
+  featuredMovies: [],
   loading: false
 };
 
@@ -20,6 +22,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: true
+      };
+    case GET_FEATURED_MOVIES:
+      return {
+        ...state,
+        featuredMovies: action.payload,
+        loading: false
       };
     case GET_MOVIE_DATA:
       return {

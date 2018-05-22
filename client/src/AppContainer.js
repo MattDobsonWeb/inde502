@@ -8,15 +8,12 @@ import { getUnreadNotifications } from "./actions/notificationActions";
 
 class AppContainer extends Component {
   componentWillMount() {
-    this.unlisten = this.props.history.listen((location, action) => {
-      console.log("on route change");
-    });
+    this.unlisten = this.props.history.listen((location, action) => {});
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       store.dispatch(getUnreadNotifications());
-      console.log("Got Unread Notifications");
     }
   }
 
