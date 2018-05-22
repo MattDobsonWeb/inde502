@@ -56,7 +56,7 @@ class PostItem extends Component {
           <div className="media-body d-block">
             <div className="post-header">
               <strong className="mb-0 mr3">{post.username}</strong>
-              <div className="dropdown show float-right">
+              <div className="dropdown show float-md-right mb-md-0 mb-3">
                 <a
                   className="dropdown-toggle"
                   href="https://example.com"

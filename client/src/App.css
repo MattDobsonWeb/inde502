@@ -2,6 +2,7 @@ html,
 body {
   overflow-x: hidden; /* Prevent scroll on narrow devices */
   font-family: "Source Sans Pro", sans-serif;
+  padding-right: 0 !important;
 }
 
 .box-shadow {
@@ -32,6 +33,10 @@ body {
   background-color: #002a32;
 }
 
+.bg-navy-50 {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 .bg-dark-navy {
   background-color: #011e24;
 }
@@ -52,6 +57,7 @@ a:hover,
 a:active,
 a:focus {
   color: #01b3b3;
+  outline: none;
 }
 
 .btn-outline-neon {

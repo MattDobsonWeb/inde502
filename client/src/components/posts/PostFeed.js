@@ -17,7 +17,7 @@ class PostFeed extends Component {
 
   checkShowButton() {
     const { posts } = this.props;
-    if (this.state.itemsToShow <= posts.length) {
+    if (this.state.itemsToShow < posts.length) {
       return true;
     }
   }
