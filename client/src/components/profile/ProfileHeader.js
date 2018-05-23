@@ -52,20 +52,36 @@ class ProfileHeader extends Component {
           <div className="jumbotron jumbotron-fluid bg-navy text-white box-shadow mb-0 border-bottom-neon">
             <div className="container text-center">
               <div className="col-md-8 m-auto">
+                <h1 className="text-neon">
+                  <strong>{profile.username}</strong>
+                </h1>
                 <img
                   src={profile.user.avatar}
                   alt=""
-                  className="rounded border-orange box-shadow"
+                  className="rounded border-orange box-shadow mb-3"
                 />
                 <div className="profile-info">
-                  <h1 className="text-orange">
-                    <strong>{profile.username}</strong>
-                  </h1>
                   {profile.bio ? <p>{profile.bio}</p> : null}
                   {profile.location ? (
                     <p className="mb-0">
-                      <strong className="text-orange">Location</strong>{" "}
+                      <strong className="text-neon">Location</strong>{" "}
                       {profile.location}
+                    </p>
+                  ) : null}
+                  {profile.website ? (
+                    <p className="mb-0">
+                      <strong className="text-orange">
+                        <a
+                          href={
+                            profile.website.substring(0, 4) === "http"
+                              ? profile.website
+                              : `http://${profile.website}`
+                          }
+                          target="_blank"
+                        >
+                          {profile.website}
+                        </a>
+                      </strong>
                     </p>
                   ) : null}
                 </div>

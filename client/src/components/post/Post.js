@@ -29,7 +29,7 @@ class Post extends Component {
 
           {post.comments.length > 0 ? (
             <div className="bg-navy p-3 text-white rounded border-bottom-neon">
-              <p className="mb-0 ml-1">Comments</p>
+              <p className="mb-0 ml-1">Comments - Newest First</p>
             </div>
           ) : null}
 

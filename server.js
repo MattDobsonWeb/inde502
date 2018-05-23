@@ -59,8 +59,15 @@ const apiLimiter = new RateLimit({
   delayMs: 0 // disabled
 });
 
-// only apply to requests that begin with /api/
+const apiSearchLimiter = new RateLimit({
+  windowMs: 30 * 1000, // 15 minutes
+  max: 5,
+  delayMs: 0 // disabled
+});
+
+// limit api requests
 app.use("/api/users/", apiLimiter);
+app.use("/api/search/", apiSearchLimiter);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
