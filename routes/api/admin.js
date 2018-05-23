@@ -85,19 +85,24 @@ router.get(
   }
 );
 
-// @route   GET api/admin/posts
+// @route   GET api/admin/posts/days/:days
+// @desc    Analyze the tone of posts on media
+// @access  Public
 router.get("/analyze/media/:id", (req, res) => {
   Post.find({ movieId: req.params.id })
     .sort({ date: -1 })
     .then(posts => {
+      // Initiate array of the posts for the Tone Analyzer to use
       let textArray = [];
 
+      // Push each post to the array
       posts.map(post => {
         textArray.push({
           text: post.text
         });
       });
 
+      // Initiate Tone Analalyzer
       let toneAnalyzer = new ToneAnalyzerV3({
         username: "4c2cb7d8-d6c2-487b-b276-a302fb5afc2b",
         password: "ti8fCYsAmYmI",
@@ -105,10 +110,12 @@ router.get("/analyze/media/:id", (req, res) => {
         url: "https://gateway.watsonplatform.net/tone-analyzer/api/"
       });
 
+      // Tone chat parameters
       var toneChatParams = {
         utterances: textArray
       };
 
+      // Create an array to push the results to
       let results = {
         title: posts[0].movieTitle,
         media: posts[0].movieMedia,
@@ -125,14 +132,19 @@ router.get("/analyze/media/:id", (req, res) => {
         }
       };
 
+      // Analyze posts
       toneAnalyzer.toneChat(toneChatParams, function(error, analysis) {
         if (error) {
-          res.json(error);
+          res.status(404).json({ nopostfound: "No posts found" });
         } else {
+          // Map through the results of each post analysis
           analysis.utterances_tone.map(analysis => {
+            // If the tone is empty it is neutral
             if (!isEmpty(analysis.tones[0])) {
+              // Type of tone
               const toneType = analysis.tones[0].tone_name;
 
+              // Increase the tone count depending on tone
               if (toneType === "Sad") {
                 results.tones.Sad++;
               } else if (toneType === "Frustrated") {
@@ -158,41 +170,6 @@ router.get("/analyze/media/:id", (req, res) => {
       0;
     })
     .catch(err => res.status(404).json({ nopostfound: "No posts found" }));
-
-  // Post.findById(req.params.id)
-  //   .then(post => {
-  //     let toneAnalyzer = new ToneAnalyzerV3({
-  //       username: "4c2cb7d8-d6c2-487b-b276-a302fb5afc2b",
-  //       password: "ti8fCYsAmYmI",
-  //       version: "2017-09-21",
-  //       url: "https://gateway.watsonplatform.net/tone-analyzer/api/"
-  //     });
-
-  //     let textArray = [];
-
-  //     textArray.push({
-  //       text: post.text
-  //     });
-
-  //     var toneChatParams = {
-  //       utterances: textArray
-  //     };
-
-  //     toneAnalyzer.toneChat(toneChatParams, function(error, analysis) {
-  //       if (error) {
-  //         console.log(error);
-  //       } else {
-  //         console.log(JSON.stringify(analysis, null, 2));
-  //         res.json(analysis);
-  //       }
-  //     });
-  //     0;
-
-  //     res.json(textArray);
-  //   })
-  //   .catch(err =>
-  //     res.status(404).json({ nopostfound: "No post found with that ID" })
-  //   );
 });
 
 module.exports = router;
