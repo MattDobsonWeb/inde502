@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
+import { loginUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
+import { Link } from "react-router-dom";
 
-class Register extends Component {
+class Login extends Component {
   constructor() {
     super();
     this.state = {
       username: "",
-      email: "",
       password: "",
-      password2: "",
       errors: {}
     };
 
@@ -22,31 +20,33 @@ class Register extends Component {
 
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/login");
+      this.props.history.push("/");
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
   onSubmit(e) {
     e.preventDefault();
 
-    const newUser = {
+    const userData = {
       username: this.state.username,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2
+      password: this.state.password
     };
 
-    this.props.registerUser(newUser, this.props.history);
+    this.props.loginUser(userData);
+  }
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -55,28 +55,25 @@ class Register extends Component {
     return (
       <div className="container">
         <div className="col-md-6 m-auto">
+          <h1 className="font-weight-bold text-navy mt-3">
+            Thanks for registering, log in!
+          </h1>
           <div className="login bg-navy p-3 border-bottom-neon rounded mt-3 text-white box-shadow">
-            <h1 className="font-weight-bold text-center text-neon">REGISTER</h1>
-            <p className="lead text-center">Create your Reel Natter account</p>
-            <form noValidate onSubmit={this.onSubmit}>
+            <h1 className="text-center font-weight-bold text-neon">LOG IN</h1>
+            <p className="lead text-center">
+              Sign in to your Reel Natter account.
+            </p>
+            <form onSubmit={this.onSubmit}>
               <TextFieldGroup
                 placeholder="Username"
                 name="username"
+                type="text"
                 customClass="post-form"
                 value={this.state.username}
                 onChange={this.onChange}
                 error={errors.username}
               />
-              <TextFieldGroup
-                placeholder="Email"
-                name="email"
-                type="email"
-                customClass="post-form"
-                value={this.state.email}
-                onChange={this.onChange}
-                error={errors.email}
-                info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
-              />
+
               <TextFieldGroup
                 placeholder="Password"
                 name="password"
@@ -86,32 +83,26 @@ class Register extends Component {
                 onChange={this.onChange}
                 error={errors.password}
               />
-              <TextFieldGroup
-                placeholder="Confirm Password"
-                name="password2"
-                type="password"
-                customClass="post-form"
-                value={this.state.password2}
-                onChange={this.onChange}
-                error={errors.password2}
-              />
               <button
                 type="submit"
                 className="btn btn-outline-neon btn-lg btn-block mt-4"
               >
-                REGISTER
+                LOG IN
               </button>
             </form>
+            <p className="text-center p-0 m-0 mt-3">
+              Not got an account? <Link to="/register">Register Here</Link>
+            </p>
           </div>
-          <p class="mt-3 mb-3 text-muted text-center">&copy; Reel Natter</p>
+          <p className="mt-3 mb-3 text-muted text-center">&copy; Reel Natter</p>
         </div>
       </div>
     );
   }
 }
 
-Register.propTypes = {
-  registerUser: PropTypes.func.isRequired,
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -121,4 +112,4 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { registerUser })(withRouter(Register));
+export default connect(mapStateToProps, { loginUser })(Login);

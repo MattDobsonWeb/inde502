@@ -41,9 +41,15 @@ class Navbar extends Component {
           <li className="nav-item">
             <Link className="nav-link link-neon" to="/notifications">
               Notifications{" "}
-              <span className="badge badge-pill badge-light">
-                {unreadNotifications.amount}
-              </span>
+              {unreadNotifications.amount > 0 ? (
+                <span className="badge badge-pill badge-warning">
+                  {unreadNotifications.amount}
+                </span>
+              ) : (
+                <span className="badge badge-pill badge-light">
+                  {unreadNotifications.amount}
+                </span>
+              )}
             </Link>
           </li>
         </ul>

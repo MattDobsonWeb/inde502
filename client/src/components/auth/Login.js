@@ -55,7 +55,7 @@ class Login extends Component {
     return (
       <div className="container">
         <div className="col-md-6 m-auto">
-          <div className="login bg-navy p-3 border-bottom-neon rounded mt-5 text-white box-shadow">
+          <div className="login bg-navy p-3 border-bottom-neon rounded mt-3 text-white box-shadow">
             <h1 className="text-center font-weight-bold text-neon">LOG IN</h1>
             <p className="lead text-center">
               Sign in to your Reel Natter account.

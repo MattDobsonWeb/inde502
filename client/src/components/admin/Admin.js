@@ -11,7 +11,8 @@ class Admin extends Component {
     super(props);
     this.state = {
       hours: "",
-      username: ""
+      username: "",
+      toneResults: {}
     };
 
     this.onChange = this.onChange.bind(this);
@@ -168,6 +169,7 @@ class Admin extends Component {
               {userPostsContent}
             </div>
           </div>
+          <div className="row" />
         </div>
       </div>
     );

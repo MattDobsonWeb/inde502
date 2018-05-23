@@ -5,6 +5,7 @@ const passport = require("passport");
 const rp = require("request-promise");
 const keys = require("../../config/keys");
 const isEmpty = require("../../validation/is-empty");
+const RateLimit = require("express-rate-limit");
 
 // @route   GET api/search/test
 // @desc    Tests search route

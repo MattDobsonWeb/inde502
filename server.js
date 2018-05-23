@@ -22,6 +22,17 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Limit api requests
+var searchLimiter = new RateLimit({
+  windowMs: 10 * 1000, // 10 second window
+  delayMs: 0, // slow down subsequent responses by 3 seconds per request
+  max: 30, // start blocking after 5 requests
+  message: "Too many requests made",
+  headers: true
+});
+
+app.use("/api/", searchLimiter);
+
 // DB Config
 const db = require("./config/keys").MongoURI;
 
@@ -49,25 +60,6 @@ app.use("/api/notifications", notifications);
 app.use("/api/following", following);
 app.use("/api/search", search);
 app.use("/api/admin", admin);
-
-app.enable("trust proxy"); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
-
-// Limit API Requests
-const apiLimiter = new RateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,
-  delayMs: 0 // disabled
-});
-
-const apiSearchLimiter = new RateLimit({
-  windowMs: 30 * 1000, // 15 minutes
-  max: 5,
-  delayMs: 0 // disabled
-});
-
-// limit api requests
-app.use("/api/users/", apiLimiter);
-app.use("/api/search/", apiSearchLimiter);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {

@@ -32,7 +32,8 @@
     "regex": "^0.1.1",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
-    "validator": "^9.4.1"
+    "validator": "^9.4.1",
+    "watson-developer-cloud": "^3.4.2"
   },
   "devDependencies": {
     "nodemon": "^1.17.3"

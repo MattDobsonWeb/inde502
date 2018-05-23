@@ -12,12 +12,13 @@ class NotificationFeed extends Component {
     };
 
     this.showMore = this.showMore.bind(this);
+    this.checkShowButton = this.checkShowButton.bind(this);
   }
 
-  componentDidMount() {
-    const { notifications } = this.props;
-    if (this.state.itemsToShow >= notifications.length) {
-      this.setState({ showButton: false });
+  checkShowButton() {
+    const { posts } = this.props;
+    if (this.state.itemsToShow < posts.length) {
+      return true;
     }
   }
 

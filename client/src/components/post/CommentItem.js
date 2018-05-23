@@ -66,9 +66,12 @@ class CommentItem extends Component {
 
             <p className="pb-3 mb-0 lh-125 border-gray">
               <span className="d-block mb-3">
-                <a className="orange-link" href="">
+                <Link
+                  className="orange-link"
+                  to={`/profile/${comment.username}`}
+                >
                   @{comment.username}
-                </a>
+                </Link>
               </span>
               {comment.text}
             </p>
