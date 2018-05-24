@@ -21,6 +21,7 @@ class ProfileHeader extends Component {
 
     e.preventDefault();
 
+    // Find if use is following other user and show correct button
     if (!this.findUserFollowing(profile.followers)) {
       this.props.followUser(profile.user.username);
     } else {
@@ -28,6 +29,7 @@ class ProfileHeader extends Component {
     }
   }
 
+  // Find if use is following other user and show correct button
   findUserFollowing(followers) {
     const { user } = this.props.auth;
 
@@ -86,6 +88,7 @@ class ProfileHeader extends Component {
                   ) : null}
                 </div>
 
+                {/* Show following button */}
                 {user.username !== profile.user.username && isAuthenticated ? (
                   this.findUserFollowing(profile.followers) ? (
                     <div

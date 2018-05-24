@@ -32,6 +32,7 @@ class Profile extends Component {
     let profileHeader;
     let postContent;
 
+    // If post content laoding show spinner, otherwise show feed
     if (profile === null || loading) {
       profileHeader = <Spinner />;
     } else {
@@ -48,6 +49,7 @@ class Profile extends Component {
       <div>
         {profileHeader}
 
+        {/* Show feed */}
         <div className="container">
           <div className="col-lg-8 m-auto">{postContent}</div>
         </div>

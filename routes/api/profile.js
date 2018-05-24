@@ -26,6 +26,7 @@ router.get(
   (req, res) => {
     const errors = {};
 
+    // Find the user in profile collection
     Profile.findOne({ user: req.user.id })
       .populate("user", ["username", "avatar"])
       .then(profile => {
@@ -45,6 +46,7 @@ router.get(
 router.get("/all", (req, res) => {
   const errors = {};
 
+  // Find all users in profile collection
   Profile.find()
     .populate("user", ["username", "avatar"])
     .then(profiles => {
@@ -73,7 +75,7 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    // Get fields
+    // Get profile fields
     const profileFields = {};
     profileFields.user = req.user.id;
     if (req.body.displayname) profileFields.displayname = req.body.displayname;
@@ -104,9 +106,11 @@ router.post(
 router.get("/handle/:username", (req, res) => {
   const errors = {};
 
+  // Search for the user by username
   Profile.findOne({
     username: new RegExp("^" + req.params.username + "$", "i")
   })
+    // Populate user array with ID, username and avatar
     .populate("user", ["username", "avatar"])
     .then(profile => {
       if (!profile) {
@@ -118,44 +122,13 @@ router.get("/handle/:username", (req, res) => {
     });
 });
 
-// @route   GET api/profile/movie/:movie_id
-// @desc    Get movie data
-// @access  Public
-router.get("/movie/:movie_id", (req, res) => {
-  const errors = {};
-
-  // Move this to front end - use this area to get posts by movieID
-  rp
-    .get(`http://www.omdbapi.com/?i=${req.params.movie_id}&apikey=a71dd7da`, {
-      json: true
-    })
-    .then(data => {
-      res.json(data);
-    });
-});
-
-router.get("/movie/title/:movie_title", (req, res) => {
-  const errors = {};
-
-  // Move this to front end - use this area to get posts by movieID
-  rp
-    .get(
-      `http://www.omdbapi.com/?t=${req.params.movie_title}&apikey=a71dd7da`,
-      {
-        json: true
-      }
-    )
-    .then(data => {
-      res.json(data);
-    });
-});
-
 // @route   GET api/profile/user/:user_id
 // @desc    Get profile by user ID
 // @access  Public
 router.get("/user/:user_id", (req, res) => {
   const errors = {};
 
+  // Find the profile by ID
   Profile.findOne({ user: req.params.user_id })
     .populate("user", ["username", "avatar"])
     .then(profile => {
@@ -178,6 +151,7 @@ router.delete(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    // Find the profile and then remove it
     Profile.findOneAndRemove({ user: req.user.id }).then(() => {
       User.findOneAndRemove({ _id: req.user.id }).then(() =>
         res.json({ success: true })

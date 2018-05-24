@@ -26,13 +26,6 @@ const ProfileSchema = new Schema({
   birthday: {
     type: Date
   },
-  posts: [
-    {
-      id: {
-        type: String
-      }
-    }
-  ],
   following: [
     {
       username: {

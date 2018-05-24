@@ -21,10 +21,12 @@ router.get("/test", (req, res) => res.json({ msg: "Posts Works" }));
 router.get("/handle/:username", (req, res) => {
   const errors = {};
 
+  // Check to see if user exists
   Profile.findOne({
     username: new RegExp("^" + req.params.username + "$", "i")
   })
     .then(profile => {
+      // Find notifications from the database
       Notification.find({
         toUsername: new RegExp("^" + req.params.username + "$", "i")
       })
@@ -101,6 +103,7 @@ router.get(
   (req, res) => {
     const errors = {};
 
+    // Find any unread notifications
     Notification.find({ toId: req.user.id, read: false }).then(
       notifications => {
         res.json({ amount: notifications.length });

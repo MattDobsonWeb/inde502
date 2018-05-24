@@ -12,6 +12,7 @@ const Post = require("../../models/Post");
 // @desc    Get the info regarding a movie
 // @access  Public
 router.get("/info/:media/:movie_id", (req, res) => {
+  // Call to TMDB to get movie data by media type (TV or MOVIE), then ID
   rp
     .get(
       `https://api.themoviedb.org/3/${req.params.media}/${
@@ -35,9 +36,10 @@ router.get("/posts/:movie_id", (req, res) => {
 });
 
 // @route   GET api/movies/featured
-// @desc    Get the info regarding a movie
+// @desc    Get movies in theatres
 // @access  Public
 router.get("/featured", (req, res) => {
+  // Pull in 'Now Playing' movies
   rp
     .get(
       "https://api.themoviedb.org/3/movie/now_playing?api_key=9de0923a2225f7196ad07f894fe36ab8&language=en-US&page=1",

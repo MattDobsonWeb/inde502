@@ -49,7 +49,7 @@ class Admin extends Component {
     e.preventDefault();
 
     this.setState({ hours: "" });
-    this.props.getAdminPosts(" ");
+    this.props.getAdminPosts(0);
   }
 
   render() {
@@ -57,7 +57,7 @@ class Admin extends Component {
 
     let postContent, userPostsContent;
 
-    if (isEmpty(posts) || loading) {
+    if (isEmpty(posts) || loading || posts.timeframe === "0") {
       postContent = null;
     } else {
       postContent = (

@@ -38,10 +38,11 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    // If user inputs a movie ID or title!
+    // Find if user inputs a movie ID or title!
     if (req.body.movie) {
+      // If post starts with TT it is an IMDB ID
       if (req.body.movie.startsWith("tt") && req.body.movie.length == 9) {
-        // Pull film info from database!
+        // Pull film info from database by ID
         rp
           .get(
             `https://api.themoviedb.org/3/find/${req.body.movie}?api_key=${
@@ -52,12 +53,15 @@ router.post(
             }
           )
           .then(data => {
+            // If the film is not found
             if (isEmpty(data.movie_results) && isEmpty(data.tv_results)) {
               res.status(404).json({
                 movie:
                   "There is no movie found with that ID, make sure you're inputting the ID as seen in the IMDB URL"
               });
             } else if (isEmpty(data.movie_results)) {
+              // If the movie_results is empty it must be a TV show
+              // Create new post with TV show
               const newPost = new Post({
                 text: req.body.text,
                 username: req.user.username,
@@ -71,6 +75,7 @@ router.post(
               // Save the post
               newPost.save().then(post => res.json(post));
             } else {
+              // If it's a movie make movieMedia "movie"
               const newPost = new Post({
                 text: req.body.text,
                 username: req.user.username,
@@ -86,7 +91,8 @@ router.post(
             }
           });
       } else {
-        // Pull data from TMDB api
+        // If it is not an IMDB ID, the user has inputted a title
+        // Find the exact title from the movie database and create new post
         rp
           .get(
             `https://api.themoviedb.org/3/search/multi?api_key=${
@@ -105,10 +111,14 @@ router.post(
                   "There is no movie found with that title, make sure you're inputting the title as seen on The Movie Database"
               });
             } else {
+              // This checks if it's a movie or a TV series
+              // If its a movie it will have a title
+              // If TV series it will have a name instead
               const title = data.results[0].title
                 ? data.results[0].title
                 : data.results[0].name;
 
+              // Create the new post
               const newPost = new Post({
                 text: req.body.text,
                 username: req.user.username,
@@ -153,10 +163,12 @@ router.get("/", (req, res) => {
 // @desc    Get post by username
 // @access  Public
 router.get("/user/:username", (req, res) => {
+  // Check if user exists by finding username
   Profile.findOne({
     username: new RegExp("^" + req.params.username + "$", "i")
   })
     .then(profile => {
+      // Return their posts
       Post.find({ user: profile.user })
         .sort({ date: -1 })
         .then(posts => res.json(posts))
@@ -186,7 +198,7 @@ router.delete(
     Profile.findOne({ user: req.user.id }).then(profile => {
       Post.findById(req.params.id)
         .then(post => {
-          // Check for post owner
+          // Check if post belongs to logged in user
           if (post.user.toString() !== req.user.id && !req.user.admin) {
             return res
               .status(401)
@@ -220,6 +232,7 @@ router.post(
               .json({ alreadyliked: "User already liked this post" });
           }
 
+          // Create a new notification to send to post owner
           const newNotification = {
             toId: post.user,
             toUsername: post.username,
@@ -242,6 +255,7 @@ router.post(
               .then(console.log("Like notification Saved"));
           }
 
+          // Save post to DB
           post.save().then(post => res.json(post));
         })
         .catch(err => res.status(404).json({ postnotfound: "No post found" }));
@@ -308,6 +322,7 @@ router.post(
           user: req.user.id
         };
 
+        // Create a new notification to send to the user
         const newNotification = {
           toId: post.user,
           toUsername: post.username,
@@ -329,6 +344,7 @@ router.post(
           if (!uniqueUser.includes(comment.username)) {
             uniqueUser.push(comment.username);
 
+            // Create a notification to send to users whom have commented on the post also
             const newReplyNotification = new Notification({
               toId: comment.user,
               toUsername: comment.username,

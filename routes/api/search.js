@@ -13,7 +13,7 @@ const RateLimit = require("express-rate-limit");
 router.get("/test", (req, res) => res.json({ msg: "Search Works" }));
 
 // @route   GET api/search/media/:query
-// @desc    Get movie/tv info
+// @desc    Search for a movie/TV series
 // @access  Public
 router.get("/media/:query", (req, res) => {
   rp
@@ -30,7 +30,7 @@ router.get("/media/:query", (req, res) => {
 });
 
 // @route   GET api/search/user/:username
-// @desc    Get movie/tv info
+// @desc    Search for a user
 // @access  Public
 router.get("/user/:username", (req, res) => {
   User.find({ username: new RegExp("^" + req.params.username, "i") }).then(

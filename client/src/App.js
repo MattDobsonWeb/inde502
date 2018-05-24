@@ -9,10 +9,12 @@ import "./App.css";
 import { Provider } from "react-redux";
 import store from "./store";
 
+// Import Route Components
 import PrivateRoute from "./components/common/PrivateRoute";
 import AdminRoute from "./components/common/AdminRoute";
 import AppContainer from "./AppContainer";
 
+// Import Components
 import Navbar from "./components/layout/Navbar";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
@@ -48,6 +50,7 @@ if (localStorage.jwtToken) {
   }
 }
 
+// Set Up Routes and Default Visuals
 class App extends Component {
   render() {
     return (

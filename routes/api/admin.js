@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const rp = require("request-promise");
 const ToneAnalyzerV3 = require("watson-developer-cloud/tone-analyzer/v3");
+const NaturalLanguageUnderstandingV1 = require("watson-developer-cloud/natural-language-understanding/v1.js");
 const keys = require("../../config/keys");
 const isEmpty = require("../../validation/is-empty");
 
@@ -25,7 +26,7 @@ const validatePostInput = require("../../validation/postValidation");
 router.get("/test", (req, res) => res.json({ msg: "Admin Works" }));
 
 // @route   GET api/admin/posts/days/:days
-// @desc    Get posts x number of days
+// @desc    Get posts within x number of hourse
 // @access  Public
 router.get(
   "/posts/hours/:hours",
@@ -38,6 +39,7 @@ router.get(
       return res.status(401).json({ notauthorized: "User not authorized" });
     }
 
+    // Search for posts within the hours parameter and return them
     Post.find({
       date: {
         $gte: new Date(new Date() - req.params.hours * 60 * 60 * 1000)
@@ -49,125 +51,61 @@ router.get(
   }
 );
 
-// @route   GET api/admin/posts/days/:days
-// @desc    Get posts x number of days
-// @access  Public
-router.get(
-  "/posts/analyze/tone",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const errors = {};
-
-    let toneAnalyzer = new ToneAnalyzerV3({
-      username: "4c2cb7d8-d6c2-487b-b276-a302fb5afc2b",
-      password: "ti8fCYsAmYmI",
-      version: "2017-09-21",
-      url: "https://gateway.watsonplatform.net/tone-analyzer/api/"
-    });
-
-    const text =
-      "Team, I know that times are tough! Product sales have been disappointing for the past three quarters. We have a competitive product, but we need to do a better job of selling it!";
-
-    const toneParams = {
-      tone_input: { text: text },
-      content_type: "application/json"
-    };
-
-    toneAnalyzer.tone(toneParams, function(error, analysis) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log(JSON.stringify(analysis, null, 2));
-        res.json;
-      }
-    });
-    0;
-  }
-);
-
-// @route   GET api/admin/posts/days/:days
-// @desc    Analyze the tone of posts on media
+// @route   GET api/admin/analyze/media/:id
+// @desc    Analyze the sentiment of posts on media
 // @access  Public
 router.get("/analyze/media/:id", (req, res) => {
   Post.find({ movieId: req.params.id })
     .sort({ date: -1 })
     .then(posts => {
-      // Initiate array of the posts for the Tone Analyzer to use
-      let textArray = [];
+      // Initiate string of the posts for the Sentiment Analyzer to use
+      let textInput = [];
 
-      // Push each post to the array
+      // Push each post to the string
       posts.map(post => {
-        textArray.push({
-          text: post.text
-        });
+        textInput += " " + post.text + ".";
       });
 
-      // Initiate Tone Analalyzer
-      let toneAnalyzer = new ToneAnalyzerV3({
-        username: "4c2cb7d8-d6c2-487b-b276-a302fb5afc2b",
-        password: "ti8fCYsAmYmI",
-        version: "2017-09-21",
-        url: "https://gateway.watsonplatform.net/tone-analyzer/api/"
+      // Initiate Sentiment Analyzer
+      let natural_language_understanding = new NaturalLanguageUnderstandingV1({
+        version: "2018-03-16",
+        username: "3888a591-7e0b-4767-a058-66c54ecd369b",
+        password: "4sItmserNtkp"
       });
 
-      // Tone chat parameters
-      var toneChatParams = {
-        utterances: textArray
+      // Parameter for sentiment anlayzer
+      // Returns only the sentiment of the whole document
+      const parameters = {
+        text: textInput,
+        features: {
+          sentiment: {}
+        }
       };
 
-      // Create an array to push the results to
+      // Results array to res.json
       let results = {
         title: posts[0].movieTitle,
         media: posts[0].movieMedia,
         posts: posts.length,
-        tones: {
-          Sad: 0,
-          Frustrated: 0,
-          Satisfied: 0,
-          Excited: 0,
-          Polite: 0,
-          Impolite: 0,
-          Sympathetic: 0,
-          Neutral: 0
-        }
+        sentiment: "",
+        score: ""
       };
 
-      // Analyze posts
-      toneAnalyzer.toneChat(toneChatParams, function(error, analysis) {
-        if (error) {
-          res.status(404).json({ nopostfound: "No posts found" });
-        } else {
-          // Map through the results of each post analysis
-          analysis.utterances_tone.map(analysis => {
-            // If the tone is empty it is neutral
-            if (!isEmpty(analysis.tones[0])) {
-              // Type of tone
-              const toneType = analysis.tones[0].tone_name;
-
-              // Increase the tone count depending on tone
-              if (toneType === "Sad") {
-                results.tones.Sad++;
-              } else if (toneType === "Frustrated") {
-                results.tones.Frustrated++;
-              } else if (toneType === "Satisfied") {
-                results.tones.Satisfied++;
-              } else if (toneType === "Excited") {
-                results.tones.Excited++;
-              } else if (toneType === "Polite") {
-                results.tones.Polite++;
-              } else if (toneType === "Impolite") {
-                results.tones.Impolite++;
-              } else if (toneType === "Sympathetic") {
-                results.tones.Sympathetic++;
-              }
-            } else {
-              results.tones.Neutral++;
-            }
-          });
+      // Analyze the posts and get a response
+      natural_language_understanding.analyze(parameters, function(
+        err,
+        response
+      ) {
+        if (err) console.log("error:", err);
+        else {
+          // If they're is a sentiment found fill results with score and document
+          if (!isEmpty(response.sentiment.document)) {
+            results.sentiment = response.sentiment.document.label;
+            results.score = response.sentiment.document.score;
+          }
           res.json(results);
         }
       });
-      0;
     })
     .catch(err => res.status(404).json({ nopostfound: "No posts found" }));
 });

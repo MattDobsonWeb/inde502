@@ -14,6 +14,7 @@ module.exports = function validateProfileInput(data) {
   //   errors.displayname = "Display Name is required";
   // }
 
+  // Check if website is a valid URL
   if (!isEmpty(data.website)) {
     if (!Validator.isURL(data.website)) {
       errors.website = "Not a valid URL";

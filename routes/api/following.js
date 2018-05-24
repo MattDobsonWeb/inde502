@@ -100,7 +100,7 @@ router.post(
   }
 );
 
-// @route   POST api/following/unfollow/:handle
+// @route   POST api/following/unfollow/:username
 // @desc    Unfollow a user
 // @access  Private
 router.post(
@@ -125,6 +125,7 @@ router.post(
               .json({ notfollowing: "You're not yet following this user" });
           }
 
+          // Remove follow
           Profile.findOne({
             username: new RegExp("^" + req.params.username + "$", "i")
           }).then(userUnfollowed => {
