@@ -103,7 +103,7 @@ class Register extends Component {
               </button>
             </form>
           </div>
-          <p class="mt-3 mb-3 text-muted text-center">&copy; Reel Natter</p>
+          <p className="mt-3 mb-3 text-muted text-center">&copy; Reel Natter</p>
         </div>
       </div>
     );

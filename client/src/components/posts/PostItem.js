@@ -48,11 +48,13 @@ class PostItem extends Component {
     return (
       <div className="my-3 p-3 bg-navy rounded border-bottom-neon box-shadow text-white">
         <div className="media">
-          <img
-            src={post.avatar}
-            alt=""
-            className="avatar mr-3 rounded border-orange"
-          />
+          <Link to={`/profile/${post.username}`}>
+            <img
+              src={post.avatar}
+              alt=""
+              className="avatar mr-3 rounded border-orange"
+            />
+          </Link>
           <div className="media-body d-block">
             <div className="post-header">
               <strong className="mb-0 mr3">{post.username}</strong>
@@ -93,7 +95,7 @@ class PostItem extends Component {
               </div>
             </div>
 
-            <p className="pb-3 mb-0 lh-125 border-gray">
+            <p className="pb-3 mb-0 lh-125 border-gray white-space">
               <span className="d-block mb-3">
                 <Link className="orange-link" to={`/profile/${post.username}`}>
                   @{post.username}
@@ -154,21 +156,6 @@ class PostItem extends Component {
                 )
               ) : null}
             </span>
-
-            {/* Post Comments */}
-            {/* <div className="mt-3">
-              {!isEmpty(post.comments)
-                ? post.comments.map(comment => (
-                    <p>
-                      <img
-                        className="avatar rounded-circle border-orange"
-                        src={comment.avatar}
-                      />{" "}
-                      {comment.text}
-                    </p>
-                  ))
-                : null}
-            </div> */}
           </div>
         </div>
       </div>

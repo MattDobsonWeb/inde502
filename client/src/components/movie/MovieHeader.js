@@ -24,13 +24,16 @@ class MovieHeader extends Component {
       movieDate = movieData.release_date.split("-")[0];
     }
 
-    const imageURI = `https://image.tmdb.org/t/p/w500${movieData.poster_path}`;
+    let imageURI, backgroundImage;
 
-    const backgroundImage = {
-      backgroundImage: `linear-gradient( rgba(13,42,53,.7), rgba(13,42,53,.7) ),
-       url(https://image.tmdb.org/t/p/w1280${movieData.backdrop_path})`,
-      backgroundSize: "cover"
-    };
+    if (!isEmpty(movieData)) {
+      imageURI = `https://image.tmdb.org/t/p/w500${movieData.poster_path}`;
+      backgroundImage = {
+        backgroundImage: `linear-gradient( rgba(13,42,53,.7), rgba(13,42,53,.7) ),
+         url(https://image.tmdb.org/t/p/w1280${movieData.backdrop_path})`,
+        backgroundSize: "cover"
+      };
+    }
 
     return (
       <div className="movieHeader">
@@ -126,7 +129,7 @@ class MovieHeader extends Component {
                 {movieData.episode_run_time ? (
                   <span>
                     <p className="font-weight-bold m-0">
-                      {movieData.episode_run_time} mins
+                      {movieData.episode_run_time[0]} mins
                     </p>
                     <p className="mb-0">Episode Run Time</p>
                   </span>

@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getAdminPosts, getAdminUserPosts } from "../../actions/adminActions";
+import {
+  getAdminPosts,
+  getAdminUserPosts,
+  getSentiment
+} from "../../actions/adminActions";
 import PostFeed from "../posts/PostFeed";
 import TextFieldGroup from "../common/TextFieldGroup";
 import isEmpty from "../../validation/is-empty";
@@ -12,14 +16,18 @@ class Admin extends Component {
     this.state = {
       hours: "",
       username: "",
-      toneResults: {}
+      media_id: ""
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onUserPostsSubmit = this.onUserPostsSubmit.bind(this);
+    this.onAiSubmit = this.onAiSubmit.bind(this);
+
+    // Reset
     this.onUserPostsReset = this.onUserPostsReset.bind(this);
     this.onRecentPostsReset = this.onRecentPostsReset.bind(this);
+    this.onAiReset = this.onAiReset.bind(this);
   }
 
   onSubmit(e) {
@@ -34,8 +42,21 @@ class Admin extends Component {
     this.props.getAdminUserPosts(this.state.username);
   }
 
+  onAiSubmit(e) {
+    e.preventDefault();
+
+    this.props.getSentiment(this.state.media_id);
+  }
+
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onAiReset(e) {
+    e.preventDefault();
+
+    this.setState({ media_id: "" });
+    this.props.getSentiment(" ");
   }
 
   onUserPostsReset(e) {
@@ -53,9 +74,9 @@ class Admin extends Component {
   }
 
   render() {
-    const { posts, loading, userPosts } = this.props.admin;
+    const { posts, loading, userPosts, ai } = this.props.admin;
 
-    let postContent, userPostsContent;
+    let postContent, userPostsContent, sentimentContent;
 
     if (isEmpty(posts) || loading || posts.timeframe === "0") {
       postContent = null;
@@ -85,6 +106,28 @@ class Admin extends Component {
       );
     }
 
+    if (isEmpty(ai) || loading) {
+      sentimentContent = null;
+    } else {
+      sentimentContent = (
+        <span className="text-white text-left">
+          <h3 className="mt-3">
+            <span className="text-neon">Title: </span> {ai.title}
+          </h3>
+          <h3 className="mt-3">
+            <span className="text-neon">Posts: </span> {ai.posts}
+          </h3>
+          <h3 className="mt-3">
+            <span className="text-neon">Sentiment: </span>{" "}
+            {ai.sentiment === "positive" ? "Positive" : "Negative"}
+          </h3>
+          <h3 className="mt-3">
+            <span className="text-neon">Score: </span> {ai.score}
+          </h3>
+        </span>
+      );
+    }
+
     return (
       <div>
         <div className="container">
@@ -97,7 +140,7 @@ class Admin extends Component {
           <div className="row">
             <div id="posts-hour" className="col-md-6">
               {/* GET RECENT POSTS */}
-              <div className="bg-navy p-3 text-white text-center border-bottom-neon box-shadow rounded">
+              <div className="bg-navy p-3 text-white text-center border-bottom-neon box-shadow rounded mt-3">
                 <h1 className="font-weight-bold text-neon">RECENT POSTS</h1>
                 <p className="lead">
                   Search for recent posts in the past hours. Admins can delete
@@ -133,7 +176,7 @@ class Admin extends Component {
 
             <div id="users-hour" className="col-md-6">
               {/* GET USER POSTS */}
-              <div className="bg-navy p-3 text-white text-center border-bottom-neon box-shadow rounded">
+              <div className="bg-navy p-3 text-white text-center border-bottom-neon box-shadow rounded mt-3">
                 <h1 className="font-weight-bold text-neon">USER POSTS</h1>
                 <p className="lead">
                   Search for posts from a user. Admins can delete posts by
@@ -169,7 +212,54 @@ class Admin extends Component {
               {userPostsContent}
             </div>
           </div>
-          <div className="row" />
+
+          <div className="row">
+            <div id="ai" className="col-md-6">
+              {/* GET USER POSTS */}
+              <div className="bg-navy p-3 text-white text-center border-bottom-neon box-shadow rounded my-3">
+                <h1 className="font-weight-bold text-neon">
+                  GET MEDIA SENTIMENT
+                </h1>
+                <p className="lead">
+                  Find the overall sentiment of posts regarding a movie/TV
+                  series. Input an a movie/TV ID.
+                  <br />
+                  <br />
+                  Where can I find an ID?<br />
+                  https://www.reelnatter.com/media/movie/<span className="text-neon font-weight-bold">
+                    597
+                  </span>
+                </p>
+                <form onSubmit={this.onAiSubmit} className="text-left">
+                  <TextFieldGroup
+                    placeholder="Movie/TV Series ID"
+                    name="media_id"
+                    value={this.state.media_id}
+                    onChange={this.onChange}
+                    customClass="navy-form"
+                    info="Input Movie/TV Series ID"
+                  />
+
+                  <button
+                    type="submit"
+                    value="Submit"
+                    className="btn btn-outline-neon btn-block mt-2"
+                  >
+                    SEARCH
+                  </button>
+
+                  <button
+                    onClick={this.onAiReset}
+                    value="userPosts"
+                    className="btn btn-outline-danger btn-block mt-2"
+                  >
+                    RESET
+                  </button>
+                </form>
+                {sentimentContent}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -179,6 +269,7 @@ class Admin extends Component {
 Admin.propTypes = {
   getAdminPosts: PropTypes.func.isRequired,
   getAdminUserPosts: PropTypes.func.isRequired,
+  getSentiment: PropTypes.func.isRequired,
   admin: PropTypes.object.isRequired
 };
 
@@ -188,5 +279,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   getAdminPosts,
-  getAdminUserPosts
+  getAdminUserPosts,
+  getSentiment
 })(Admin);

@@ -28,7 +28,19 @@ class FollowingPosts extends Component {
     if (posts === null || loading) {
       postContent = <Spinner />;
     } else {
-      postContent = <PostFeed posts={posts} />;
+      postContent = (
+        <div>
+          {posts.length > 0 ? (
+            <PostFeed posts={posts} />
+          ) : (
+            <div className="bg-navy border-bottom-neon text-center text-white rounded p-3 box-shadow mt-3">
+              <h3 className="font-weight-bold mb-0">
+                Currently No Posts To Show
+              </h3>
+            </div>
+          )}
+        </div>
+      );
     }
 
     if (currentProfile === null) {

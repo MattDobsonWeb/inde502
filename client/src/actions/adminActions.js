@@ -1,8 +1,8 @@
 import axios from "axios";
 
-import { ADMIN_GET_POSTS, ADMIN_GET_USER_POSTS } from "./types";
+import { ADMIN_GET_POSTS, ADMIN_GET_USER_POSTS, ADMIN_GET_AI } from "./types";
 
-// Get Movie Data
+// Get Admin Posts Data
 export const getAdminPosts = hours => dispatch => {
   axios
     .get(`/api/admin/posts/hours/${hours}`)
@@ -33,6 +33,24 @@ export const getAdminUserPosts = username => dispatch => {
     .catch(err =>
       dispatch({
         type: ADMIN_GET_USER_POSTS,
+        payload: null
+      })
+    );
+};
+
+// Get Analysed Data
+export const getSentiment = id => dispatch => {
+  axios
+    .get(`/api/admin/analyze/media/${id}`)
+    .then(res =>
+      dispatch({
+        type: ADMIN_GET_AI,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: ADMIN_GET_AI,
         payload: null
       })
     );

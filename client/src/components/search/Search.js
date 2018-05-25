@@ -10,6 +10,7 @@ class Search extends Component {
     id: ""
   };
 
+  // Query on input change
   handleInputChange = () => {
     this.setState(
       {
@@ -25,6 +26,7 @@ class Search extends Component {
     );
   };
 
+  // Get Info
   getInfo = () => {
     axios.get(`/api/search/media/${this.state.query}`).then(data => {
       this.setState({
@@ -43,20 +45,18 @@ class Search extends Component {
     return (
       <div className="container">
         <div className="col-md-8 m-auto">
-          <form>
-            <div className="form-group mt-3">
-              <input
-                placeholder="Search for..."
-                className="form-control navy-form"
-                ref={input => (this.search = input)}
-                onChange={this.handleInputChange}
-              />
-              <Suggestions
-                results={this.state.results}
-                users={this.state.userResults}
-              />
-            </div>
-          </form>
+          <div className="form-group mt-3">
+            <input
+              placeholder="Search for..."
+              className="form-control navy-form"
+              ref={input => (this.search = input)}
+              onChange={this.handleInputChange}
+            />
+            <Suggestions
+              results={this.state.results}
+              users={this.state.userResults}
+            />
+          </div>
 
           {this.state.query.length < 2 ? (
             <h1 className="text-orange font-weight-bold text-center">
