@@ -18,8 +18,8 @@ npm run dev
 # Server runs on http://localhost:5000, client runs on http://localhost:3000
 ```
 
-For staff @ Plymouth Universty, keys_dev.js will be required to run in development.
-This is includeded in the Code Submission folder but not from the repo due to security.
+For staff @ Plymouth Universty, **keys_dev.js** will be required to run in development.
+This is included in the Code Submission folder but not from the repo due to security.
 
 ## App Info
 
