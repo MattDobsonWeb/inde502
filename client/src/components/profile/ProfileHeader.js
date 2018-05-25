@@ -113,11 +113,11 @@ class ProfileHeader extends Component {
           <div className="ratings p-3 box-shadow text-white bg-navy border-bottom-neon">
             <div className="container text-center">
               <div className="row">
-                <div className="col-md-4 border-right">
+                <div className="col-md-4 border-md-right">
                   <strong>{posts ? posts.length : null}</strong>
                   <p className="mb-0">Posts</p>
                 </div>
-                <div className="col-md-4 border-right">
+                <div className="col-md-4 border-md-right">
                   <a
                     href="#followingModal"
                     data-toggle="modal"

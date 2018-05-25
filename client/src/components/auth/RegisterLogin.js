@@ -55,7 +55,7 @@ class Login extends Component {
     return (
       <div className="container">
         <div className="col-md-6 m-auto">
-          <h1 className="font-weight-bold text-navy mt-3">
+          <h1 className="font-weight-bold text-navy mt-3 text-center">
             Thanks for registering, log in!
           </h1>
           <div className="login bg-navy p-3 border-bottom-neon rounded mt-3 text-white box-shadow">

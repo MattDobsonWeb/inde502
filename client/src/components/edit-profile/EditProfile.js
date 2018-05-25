@@ -96,7 +96,9 @@ class EditProfile extends Component {
                     target="_blank"
                   >
                     here.
-                  </a>
+                  </a>{" "}
+                  A Gravatar is linked with your email, so use the email you
+                  signed up to ReelNatter with.
                 </p>
               </div>
 

@@ -16,7 +16,7 @@ class Admin extends Component {
     this.state = {
       hours: "",
       username: "",
-      media_id: ""
+      media_id: "2316"
     };
 
     this.onChange = this.onChange.bind(this);
@@ -223,12 +223,20 @@ class Admin extends Component {
                 <p className="lead">
                   Find the overall sentiment of posts regarding a movie/TV
                   series. Input an a movie/TV ID.
+                </p>
+                <p>
+                  <strong>Where can I find an ID?</strong>
                   <br />
-                  <br />
-                  Where can I find an ID?<br />
                   https://www.reelnatter.com/media/movie/<span className="text-neon font-weight-bold">
-                    597
+                    2316
                   </span>
+                  <br />
+                  <br />
+                  <strong>I'm clicking search but nothing is happening?</strong>
+                  <br />
+                  If no results come up after clicking search that's because
+                  there's either no posts regarding that movie/TV series or
+                  there isn't enough posts to properly analyse.
                 </p>
                 <form onSubmit={this.onAiSubmit} className="text-left">
                   <TextFieldGroup
@@ -246,14 +254,6 @@ class Admin extends Component {
                     className="btn btn-outline-neon btn-block mt-2"
                   >
                     SEARCH
-                  </button>
-
-                  <button
-                    onClick={this.onAiReset}
-                    value="userPosts"
-                    className="btn btn-outline-danger btn-block mt-2"
-                  >
-                    RESET
                   </button>
                 </form>
                 {sentimentContent}

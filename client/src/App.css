@@ -121,6 +121,13 @@ a:focus {
   box-shadow: 0 0 0 0.2rem rgba(0, 214, 214, 0.25);
 }
 
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 768px) {
+  .border-md-right {
+    border-right: 1px solid white;
+  }
+}
+
 /* Nav Styling */
 a.navbar-brand {
   font-weight: 700;
